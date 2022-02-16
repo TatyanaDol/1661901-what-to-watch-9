@@ -1,9 +1,8 @@
 
 function Player (): JSX.Element {
 
-    return (
-        <>
-            <div className="player">
+  return (
+    <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit">Exit</button>
@@ -35,8 +34,7 @@ function Player (): JSX.Element {
         </div>
       </div>
     </div>
-        </>
-    )
+  );
 }
 
 export default Player;
