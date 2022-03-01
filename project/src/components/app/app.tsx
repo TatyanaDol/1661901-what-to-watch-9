@@ -8,29 +8,31 @@ import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
+import {FilmData, ReviewData} from '../../moks/films';
+import React, {useState} from 'react';
 
 type AppScreenProps = {
-  title: string;
-  genre: string;
-  year: number;
+  films: FilmData[];
+  reviews: ReviewData[];
 }
 
-function App({title, genre, year}: AppScreenProps): JSX.Element {
+function App({films, reviews}: AppScreenProps): JSX.Element {
+
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainScreen title={title} genre={genre} year={year} />} />
-        <Route path={AppRoute.Sign_In} element={<SignIn />} />
-        <Route path={AppRoute.Player} element={<Player />} />
+        <Route path={AppRoute.Main} element={<MainScreen title={films[0].title} genre={films[0].genre} year={films[0].releaseDate} films={films}/>} />
+        <Route path={AppRoute.SignIn} element={<SignIn />} />
+        <Route path={AppRoute.Player} element={<Player films={films}/>} />
         <Route path={AppRoute.MyList} element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <MyList />
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <MyList films={films}/>
           </PrivateRoute>
         }
         />
-        <Route path={AppRoute.Film} element={<Film />} />
-        <Route path={AppRoute.Add_Review} element={<AddReview />} />
+        <Route path={AppRoute.Film} element={<Film films={films}/>} />
+        <Route path={AppRoute.AddReview} element={<AddReview films={films} reviews={reviews}/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>);

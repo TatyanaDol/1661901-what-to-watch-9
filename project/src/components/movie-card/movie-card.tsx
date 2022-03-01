@@ -1,19 +1,30 @@
+import {Link} from 'react-router-dom';
 
-function MovieCard(): JSX.Element {
+type SmallMovieCardProps = {
+  image: string;
+  title: string;
+  onMouseOverCb: React.Dispatch<React.SetStateAction<number>>;
+  id: number;
+}
+
+function MovieCard({image, title, onMouseOverCb, id}: SmallMovieCardProps): JSX.Element {
   return (
-    <article className="small-film-card catalog__films-card">
+    <article className="small-film-card catalog__films-card" onMouseOver={(evt) => {
+      onMouseOverCb(id);
+    }}
+    >
       <div className="small-film-card__image">
         <img
-          src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-          alt="Fantastic Beasts: The Crimes of Grindelwald"
+          src={image}
+          alt={title}
           width="280"
           height="175"
         />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">
-                    Fantastic Beasts: The Crimes of Grindelwald
-        </a>
+        <Link className="small-film-card__link" to={`/films/${id}`}>
+          {title}
+        </Link>
       </h3>
     </article>
   );
