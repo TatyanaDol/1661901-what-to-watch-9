@@ -13,6 +13,11 @@ type AddReviewProps = {
   reviews: ReviewData[];
 }
 
+type newReviewType = {
+  rating: string;
+  'review-text': string;
+}
+
 function AddReview ({films, reviews}: AddReviewProps): JSX.Element {
 
 
@@ -21,7 +26,7 @@ function AddReview ({films, reviews}: AddReviewProps): JSX.Element {
 
   const [reviewsState, setReviewsState] = useState(reviews);
 
-  function pushNewReview (newReview) {
+  function pushNewReview (newReview: newReviewType) {
     const review: ReviewData = {
       reviewId: reviewsState[reviewsState.length - 1].reviewId + 1,
       reviewText: newReview['review-text'],

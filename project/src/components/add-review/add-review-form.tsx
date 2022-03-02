@@ -19,13 +19,13 @@ function AddReviewForm ({pushNewReviewCb}: AddReviewFormProps): JSX.Element {
 
   const formDataChangeHandler = (evt: React.FormEvent<HTMLDivElement>) => {
     evt.preventDefault();
-    const {name, value} = evt.target;
+    const {name, value} = evt.target as HTMLInputElement;
     setReviewFormData({...reviewFormData, [name]: value});
   };
 
   const formDataTextInputHandler = (evt: React.FormEvent<HTMLTextAreaElement>) => {
     evt.preventDefault();
-    const {name, value} = evt.target;
+    const {name, value} = evt.target as HTMLTextAreaElement;
     setReviewFormData({...reviewFormData, [name]: value});
   };
 
@@ -68,7 +68,7 @@ function AddReviewForm ({pushNewReviewCb}: AddReviewFormProps): JSX.Element {
       <div className="add-review__text">
         <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onInput={formDataTextInputHandler}></textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="button" onClick={formSubmitHandler}>Post</button>
+          <button className="add-review__btn" type="submit" onClick={formSubmitHandler}>Post</button>
         </div>
       </div>
     </form>
