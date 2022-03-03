@@ -12,7 +12,7 @@ function Player ({films}: PlayerProps): JSX.Element {
 
   return (
     <div className="player">
-      <video src={film.videoFile} className="player__video" poster={film.bigPoster} controls></video>
+      <video src={film.videoLink} className="player__video" poster={film.posterImage} controls></video>
 
       <button type="button" className="player__exit">Exit</button>
 

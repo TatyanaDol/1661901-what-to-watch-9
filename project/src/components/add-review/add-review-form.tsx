@@ -12,7 +12,6 @@ function AddReviewForm ({pushNewReviewCb}: AddReviewFormProps): JSX.Element {
   });
 
   function formSubmitHandler (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    console.log('formSubmitHandler');
     evt.preventDefault();
     pushNewReviewCb(reviewFormData);
   }

@@ -1,5 +1,4 @@
 
-
 import {ReviewData} from '../../moks/films';
 import Review from './review';
 
@@ -11,7 +10,7 @@ function ReviewsList({reviews}: ReviewsListProps): JSX.Element {
 
   return (
     <div className="film-card__reviews-col">
-      {reviews.map((review) => <Review key={review.reviewId} review={review} />)}
+      {reviews.map((review) => <Review key={review.id} review={review} />)}
     </div>
   );
 

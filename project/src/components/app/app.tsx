@@ -1,3 +1,4 @@
+import React from 'react';
 import MainScreen from '../main-screen/main-screen';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
@@ -9,7 +10,7 @@ import SignIn from '../sign-in/sign-in';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import {FilmData, ReviewData} from '../../moks/films';
-import React, {useState} from 'react';
+
 
 type AppScreenProps = {
   films: FilmData[];
@@ -22,7 +23,7 @@ function App({films, reviews}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainScreen title={films[0].title} genre={films[0].genre} year={films[0].releaseDate} films={films}/>} />
+        <Route path={AppRoute.Main} element={<MainScreen title={films[0].name} genre={films[0].genre} year={films[0].released} films={films}/>} />
         <Route path={AppRoute.SignIn} element={<SignIn />} />
         <Route path={AppRoute.Player} element={<Player films={films}/>} />
         <Route path={AppRoute.MyList} element={

@@ -51,7 +51,7 @@ function Film({films}: FilmProps): JSX.Element {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.image} alt={film.title} />
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -75,10 +75,10 @@ function Film({films}: FilmProps): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film.title}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.releaseDate}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -103,7 +103,7 @@ function Film({films}: FilmProps): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.bigPoster} alt={film.title} width="218" height="327" />
+              <img src={film.posterImage} alt={film.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -124,8 +124,8 @@ function Film({films}: FilmProps): JSX.Element {
               <div className="film-rating">
                 <div className="film-rating__score">{film.rating}</div>
                 <p className="film-rating__meta">
-                  <span className="film-rating__level">{film.ratingDescription}</span>
-                  <span className="film-rating__count">{film.votes} ratings</span>
+                  <span className="film-rating__level">good</span>
+                  <span className="film-rating__count">{film.scoresCount} ratings</span>
                 </p>
               </div>
 
@@ -136,7 +136,7 @@ function Film({films}: FilmProps): JSX.Element {
 
                 <p className="film-card__director"><strong>Director: {film.director}</strong></p>
 
-                <p className="film-card__starring"><strong>Starring: {film.actors} and other</strong></p>
+                <p className="film-card__starring"><strong>Starring: {film.starring} and other</strong></p>
               </div>
             </div>
           </div>

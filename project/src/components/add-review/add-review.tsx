@@ -3,7 +3,6 @@ import AddReviewForm from './add-review-form';
 import {FilmData} from '../../moks/films';
 import {useParams} from 'react-router-dom';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import ReviewsList from './reviews-list';
 import {ReviewData} from '../../moks/films';
 import React, {useState} from 'react';
@@ -13,8 +12,8 @@ type AddReviewProps = {
   reviews: ReviewData[];
 }
 
-type newReviewType = {
-  rating: string;
+type ReviewFormData = {
+  rating: number;
   'review-text': string;
 }
 
@@ -26,14 +25,16 @@ function AddReview ({films, reviews}: AddReviewProps): JSX.Element {
 
   const [reviewsState, setReviewsState] = useState(reviews);
 
-  function pushNewReview (newReview: newReviewType) {
+  function pushNewReview (newReview: ReviewFormData) {
     const review: ReviewData = {
-      reviewId: reviewsState[reviewsState.length - 1].reviewId + 1,
-      reviewText: newReview['review-text'],
-      reviewAuthor: '333',
-      reviewDate: '2000',
+      id: reviewsState[reviewsState.length - 1].id + 1,
+      comment: newReview['review-text'],
+      date: '2000',
       rating: newReview.rating,
-
+      user: {
+        id: 333,
+        name: '33',
+      },
     };
     setReviewsState([...reviewsState, review]);
   }
@@ -44,7 +45,7 @@ function AddReview ({films, reviews}: AddReviewProps): JSX.Element {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.image} alt={film.title} />
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header film-card__head">
@@ -66,10 +67,10 @@ function AddReview ({films, reviews}: AddReviewProps): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film.title}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.releaseDate}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -94,7 +95,7 @@ function AddReview ({films, reviews}: AddReviewProps): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.bigPoster} alt={film.title} width="218" height="327" />
+              <img src={film.posterImage} alt={film.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">

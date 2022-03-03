@@ -9,11 +9,11 @@ function Review({review}: ReviewProps): JSX.Element {
   return (
     <div className="review">
       <blockquote className="review__quote">
-        <p className="review__text">{review.reviewText}</p>
+        <p className="review__text">{review.comment}</p>
 
         <footer className="review__details">
-          <cite className="review__author">{review.reviewAuthor}</cite>
-          <time className="review__date" dateTime="2016-12-24">{review.reviewDate}</time>
+          <cite className="review__author">{review.user.name}</cite>
+          <time className="review__date" dateTime="2016-12-24">{review.date}</time>
         </footer>
       </blockquote>
 

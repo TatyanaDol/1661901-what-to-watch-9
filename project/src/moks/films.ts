@@ -1,184 +1,213 @@
+
 export type FilmData = {
-    id: number;
-    title: string;
-    image: string;
-    bigPoster: string;
-    genre: string;
-    releaseDate: number;
-    description: string;
-    rating: number;
-    ratingDescription: string;
-    votes: number;
-    director: string;
-    actors: string[];
-    runtime: string;
-    videoFile: string;
-    inMyList: boolean;
+  id: number
+  name: string
+  posterImage: string
+  previewImage: string
+  backgroundImage: string
+  backgroundColor: string
+  videoLink: string
+  previewVideoLink: string
+  description: string
+  rating: number
+  scoresCount: number
+  director: string
+  starring: string[]
+  runTime: number
+  genre: string
+  released: number
+  isFavorite: boolean
 }
 
+
 export type ReviewData = {
-    reviewId: number;
-    reviewText: string;
-    rating: string;
-    reviewAuthor: string;
-    reviewDate: string;
+  comment: string
+  date: string
+  id: number
+  rating: number
+  user: {
+  id: number
+  name: string
+  }
 }
 
 const mockFilms: FilmData[]  = [
   {
     id: 0,
-    title: 'Aviator',
-    image: 'img/aviator.jpg',
-    bigPoster: 'img/aviator.jpg',
-    genre: 'Drama',
-    releaseDate: 2004,
+    name: 'Aviator',
+    posterImage: 'img/aviator.jpg',
+    previewImage: 'img/aviator.jpg',
+    backgroundImage: 'img/aviator.jpg',
+    backgroundColor: 'black',
+    videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     description: 'Based on the 1993 non-fiction book Howard Hughes: The Secret Life by Charles Higham, the film depicts the life of Howard Hughes',
     rating: 7.5,
-    ratingDescription: 'Good',
-    votes: 352,
+    scoresCount: 352,
     director: 'Martin Scorsese',
-    actors: ['Leonardo DiCaprio', 'Cate Blanchett', 'Kate Beckinsale'],
-    runtime: '1h 55m',
-    videoFile: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-    inMyList: true,
-
+    starring: ['Leonardo DiCaprio', 'Cate Blanchett', 'Kate Beckinsale'],
+    runTime: 115,
+    genre: 'Drama',
+    released: 2004,
+    isFavorite: true,
   },
   {
     id: 1,
-    title: 'We need to talk about Kevin',
-    image: 'img/we-need-to-talk-about-kevin.jpg',
-    bigPoster: 'img/we-need-to-talk-about-kevin.jpg',
-    genre: 'Thriller',
-    releaseDate: 2012,
+    name: 'We need to talk about Kevin',
+    posterImage: 'img/we-need-to-talk-about-kevin.jpg',
+    previewImage: 'img/we-need-to-talk-about-kevin.jpg',
+    backgroundImage: 'img/we-need-to-talk-about-kevin.jpg',
+    backgroundColor: 'black',
+    videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     description: 'A mother whose life is ruined by her son&aposs violent act struggles to make sense of his actions and move on.',
     rating: 7.5,
-    ratingDescription: 'Good',
-    votes: 401,
+    scoresCount: 401,
     director: 'Lynne Ramsay',
-    actors: ['Tilda Swinton', 'John C. Reilly', 'Ezra Miller', 'Jasper Newell'],
-    runtime: '1h 51m',
-    videoFile: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-    inMyList: false,
+    starring: ['Tilda Swinton', 'John C. Reilly', 'Ezra Miller', 'Jasper Newell'],
+    runTime: 111,
+    genre: 'Thriller',
+    released: 2012,
+    isFavorite: false,
   },
   {
     id: 2,
-    title: 'What We Do in the Shadows',
-    image: 'img/what-we-do-in-the-shadows.jpg',
-    bigPoster: 'img/what-we-do-in-the-shadows.jpg',
-    genre: 'Comedy',
-    releaseDate: 2014,
+    name: 'What We Do in the Shadows',
+    posterImage: 'img/what-we-do-in-the-shadows.jpg',
+    previewImage: 'img/what-we-do-in-the-shadows.jpg',
+    backgroundImage: 'img/what-we-do-in-the-shadows.jpg',
+    backgroundColor: 'yellow',
+    videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     description: 'Viago, Deacon, and Vladislav are vampires who are struggling with the mundane aspects of modern life',
     rating: 7.7,
-    ratingDescription: 'Good',
-    votes: 376,
+    scoresCount: 376,
     director: 'Jemaine Clement',
-    actors: ['Jemaine Clement', 'Taika Waititi', 'Cori Gonzalez-Macuer'],
-    runtime: '1h 26m',
-    videoFile: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-    inMyList: true,
+    starring: ['Jemaine Clement', 'Taika Waititi', 'Cori Gonzalez-Macuer'],
+    runTime: 86,
+    genre: 'Comedy',
+    released: 2014,
+    isFavorite: true,
   },
   {
     id: 3,
-    title: 'Revenant',
-    image: 'img/revenant.jpg',
-    bigPoster: 'img/revenant.jpg',
-    genre: 'Drama',
-    releaseDate: 2015,
+    name: 'Revenant',
+    posterImage: 'img/revenant.jpg',
+    previewImage: 'img/revenant.jpg',
+    backgroundImage: 'img/revenant.jpg',
+    backgroundColor: 'black',
+    videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     description: 'A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.',
     rating: 8.0,
-    ratingDescription: 'Very good',
-    votes: 393,
+    scoresCount: 393,
     director: 'Alejandro G. Iñárritu',
-    actors: ['Leonardo DiCaprio', 'Tom Hardy', 'Will Poulter'],
-    runtime: '2h 36m',
-    videoFile: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-    inMyList: false,
+    starring: ['Leonardo DiCaprio', 'Tom Hardy', 'Will Poulter'],
+    runTime: 156,
+    genre: 'Drama',
+    released: 2015,
+    isFavorite: false,
   },
   {
     id: 4,
-    title: 'Fantastic Beasts: The Crimes of Grindelwald',
-    image: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
-    bigPoster: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
-    genre: 'Adventure',
-    releaseDate: 2018,
+    name: 'Fantastic Beasts: The Crimes of Grindelwald',
+    posterImage: 'Fantastic Beasts: The Crimes of Grindelwald',
+    previewImage: 'Fantastic Beasts: The Crimes of Grindelwald',
+    backgroundImage: 'Fantastic Beasts: The Crimes of Grindelwald',
+    backgroundColor: 'white',
+    videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     description: 'The adventures of Magizoologist Newt Scamander.',
     rating: 6.5,
-    ratingDescription: 'Good',
-    votes: 473,
+    scoresCount: 473,
     director: 'David Yates',
-    actors: ['Eddie Redmayne', 'Katherine Waterston', 'Dan Fogler'],
-    runtime: '2h 14m',
-    videoFile: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-    inMyList: true,
+    starring: ['Eddie Redmayne', 'Katherine Waterston', 'Dan Fogler'],
+    runTime: 134,
+    genre: 'Adventure',
+    released: 2018,
+    isFavorite: true,
   },
   {
+
     id: 5,
-    title: 'Bohemian Rhapsody',
-    image: 'img/bohemian-rhapsody.jpg',
-    bigPoster: 'img/bohemian-rhapsody.jpg',
-    genre: 'Biography',
-    releaseDate: 2018,
+    name: 'Bohemian Rhapsody',
+    posterImage: 'img/bohemian-rhapsody.jpg',
+    previewImage: 'img/bohemian-rhapsody.jpg',
+    backgroundImage: 'img/bohemian-rhapsody.jpg',
+    backgroundColor: 'blue',
+    videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     description: 'The story of the legendary British rock band Queen and lead singer Freddie Mercury.',
     rating: 7.9,
-    ratingDescription: 'Good',
-    votes: 311,
+    scoresCount: 311,
     director: 'Bryan Singer',
-    actors: ['Rami Malek', 'Lucy Boynton', 'Gwilym Lee'],
-    runtime: '2h 15m',
-    videoFile: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-    inMyList: false,
+    starring: ['Rami Malek', 'Lucy Boynton', 'Gwilym Lee'],
+    runTime: 135,
+    genre: 'Biography',
+    released: 2018,
+    isFavorite: false,
   },
   {
+
     id: 6,
-    title: 'Macbeth',
-    image: 'img/macbeth.jpg',
-    bigPoster: 'img/macbeth.jpg',
-    genre: 'Drama',
-    releaseDate: 2015,
+    name: 'Macbeth',
+    posterImage: 'img/macbeth.jpg',
+    previewImage: 'img/macbeth.jpg',
+    backgroundImage: 'img/macbeth.jpg',
+    backgroundColor: 'black',
+    videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     description: 'Macbeth, the Thane of Glamis, receives a prophecy from a trio of witches that one day he will become King of Scotland.',
     rating: 6.6,
-    ratingDescription: 'Good',
-    votes: 390,
+    scoresCount: 390,
     director: 'Justin Kurzel',
-    actors: ['Michael Fassbender', 'Marion Cotillard', 'Jack Madigan'],
-    runtime: '1h 53m',
-    videoFile: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-    inMyList: true,
+    starring: ['Michael Fassbender', 'Marion Cotillard', 'Jack Madigan'],
+    runTime: 113,
+    genre: 'Drama',
+    released: 2015,
+    isFavorite: true,
   },
   {
     id: 7,
-    title: 'Johnny English',
-    image: 'img/johnny-english.jpg',
-    bigPoster: 'img/johnny-english.jpg',
-    genre: 'Comedy',
-    releaseDate: 2003,
+    name: 'Johnny English',
+    posterImage: 'img/johnny-english.jpg',
+    previewImage: 'img/johnny-english.jpg',
+    backgroundImage: 'img/johnny-english.jpg',
+    backgroundColor: 'green',
+    videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     description: 'After a sudden attack on MI5, Johnny English, Britain&aposs most confident, yet unintelligent spy, becomes Britain&aposs only spy.',
     rating: 6.2,
-    ratingDescription: 'Good',
-    votes: 421,
+    scoresCount: 421,
     director: 'Peter Howitt',
-    actors: ['Rowan Atkinson', 'John Malkovich', 'Natalie Imbruglia'],
-    runtime: '1h 29m',
-    videoFile: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-    inMyList: true,
+    starring: ['Rowan Atkinson', 'John Malkovich', 'Natalie Imbruglia'],
+    runTime: 89,
+    genre: 'Comedy',
+    released: 2003,
+    isFavorite: true,
   },
 ];
 
 export const mockReviws: ReviewData[] = [
   {
-    reviewId: 0,
-    reviewText: '111111',
-    rating: '8,1',
-    reviewAuthor: 'one',
-    reviewDate: '2021',
-
+    comment: '111111',
+    date: '2021',
+    id: 0,
+    rating: 8.1,
+    user: {
+      id: 111,
+      name: 'one',
+    },
   },
   {
-    reviewId: 1,
-    reviewText: '2222222',
-    rating: '6,5',
-    reviewAuthor: 'two',
-    reviewDate: '2022',
+    comment: '22222',
+    date: '2022',
+    id: 1,
+    rating: 6.1,
+    user: {
+      id: 222,
+      name: 'two',
+    },
   },
 ];
 
