@@ -1,9 +1,18 @@
+import {FilmData} from '../../moks/films';
+import {useParams} from 'react-router-dom';
 
-function Player (): JSX.Element {
+type PlayerProps = {
+  films: FilmData[];
+}
+
+function Player ({films}: PlayerProps): JSX.Element {
+
+  const params = useParams();
+  const film = films[Number(params.id)];
 
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film.videoLink} className="player__video" poster={film.posterImage} controls></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -11,9 +20,9 @@ function Player (): JSX.Element {
         <div className="player__controls-row">
           <div className="player__time">
             <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
+            <div className="player__toggler" style={{left: '0%'}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">0:00:00</div>
         </div>
 
         <div className="player__controls-row">

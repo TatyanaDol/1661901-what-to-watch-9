@@ -1,13 +1,18 @@
-import mockFilms from '../../data';
+import FilmsList from '../films-list/films-list';
+import {FilmData} from '../../moks/films';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
+
 
 type MainScreenProps = {
   title: string;
   genre: string;
   year: number;
+  films: FilmData[];
 }
 
 
-function MainScreen({title, genre, year}: MainScreenProps): JSX.Element {
+function MainScreen({title, genre, year, films}: MainScreenProps): JSX.Element {
   return (
     <>
       <div className="visually-hidden">
@@ -135,7 +140,7 @@ function MainScreen({title, genre, year}: MainScreenProps): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
+              <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
             </li>
           </ul>
         </header>
@@ -239,9 +244,7 @@ function MainScreen({title, genre, year}: MainScreenProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {mockFilms.map((movie) => movie)}
-          </div>
+          <FilmsList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">
