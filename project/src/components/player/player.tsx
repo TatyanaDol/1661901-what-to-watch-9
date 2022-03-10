@@ -1,6 +1,7 @@
 import {FilmData} from '../../moks/films';
 import {useParams} from 'react-router-dom';
 
+
 type PlayerProps = {
   films: FilmData[];
 }
@@ -9,6 +10,7 @@ function Player ({films}: PlayerProps): JSX.Element {
 
   const params = useParams();
   const film = films[Number(params.id)];
+
 
   return (
     <div className="player">
