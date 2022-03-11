@@ -1,46 +1,37 @@
 import {Link} from 'react-router-dom';
 import PreviewVideoPlayer from '../preview-video-player/preview-video-player';
-import {useState} from 'react';
 import {FilmData} from '../../moks/films';
 
 type SmallMovieCardProps = {
-  image: string;
-  title: string;
   onMouseOverCb: React.Dispatch<React.SetStateAction<number>>;
-  id: number;
   movie: FilmData;
+  isHovering: boolean;
+  activeMovie: number;
 }
 
-function MovieCard({image, title, onMouseOverCb, id, movie}: SmallMovieCardProps): JSX.Element {
+function MovieCard({onMouseOverCb, movie, isHovering, activeMovie}: SmallMovieCardProps): JSX.Element {
 
-  const [isHovering, setIsHovering] = useState(false);
-  let timer: NodeJS.Timeout;
   return (
     <article className="small-film-card catalog__films-card" onMouseOver={(evt) => {
-      timer = setTimeout(() => {
-        onMouseOverCb(id);
-        setIsHovering(true);
-      }, 1000);
-
+      onMouseOverCb(movie.id);
     }}
     onMouseOut={(evt) => {
-      clearTimeout(timer);
-      setIsHovering(false);
+      onMouseOverCb(-1);
     }}
     >
       <div className="small-film-card__image">
-        {isHovering ? <PreviewVideoPlayer  filmSrc={movie.previewVideoLink} posterImage={movie.posterImage} play={isHovering}/>
+        {isHovering && activeMovie === movie.id ? <PreviewVideoPlayer  filmSrc={movie.previewVideoLink} posterImage={movie.posterImage} play={isHovering}/>
           :
           <img
-            src={image}
-            alt={title}
+            src={movie.previewImage}
+            alt={movie.name}
             width="280"
             height="175"
           />}
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${id}`}>
-          {title}
+        <Link className="small-film-card__link" to={`/films/${movie.id}`}>
+          {movie.name}
         </Link>
       </h3>
     </article>
