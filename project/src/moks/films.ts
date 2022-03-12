@@ -111,9 +111,9 @@ const mockFilms: FilmData[]  = [
   {
     id: 4,
     name: 'Fantastic Beasts: The Crimes of Grindelwald',
-    posterImage: 'Fantastic Beasts: The Crimes of Grindelwald',
-    previewImage: 'Fantastic Beasts: The Crimes of Grindelwald',
-    backgroundImage: 'Fantastic Beasts: The Crimes of Grindelwald',
+    posterImage: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
+    previewImage: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
+    backgroundImage: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     backgroundColor: 'white',
     videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
