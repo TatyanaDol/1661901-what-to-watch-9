@@ -3,24 +3,24 @@ import PreviewVideoPlayer from '../preview-video-player/preview-video-player';
 import {FilmData} from '../../moks/films';
 
 type SmallMovieCardProps = {
-  onMouseOverCb: React.Dispatch<React.SetStateAction<number>>;
+  onMouseOverCb: (id: number) => void;
   movie: FilmData;
-  isHovering: boolean;
   activeMovie: number;
+  onMouseOutCb: () => void;
 }
 
-function MovieCard({onMouseOverCb, movie, isHovering, activeMovie}: SmallMovieCardProps): JSX.Element {
+function MovieCard({onMouseOverCb, movie, activeMovie, onMouseOutCb}: SmallMovieCardProps): JSX.Element {
 
   return (
     <article className="small-film-card catalog__films-card" onMouseOver={(evt) => {
       onMouseOverCb(movie.id);
     }}
     onMouseOut={(evt) => {
-      onMouseOverCb(-1);
+      onMouseOutCb();
     }}
     >
       <div className="small-film-card__image">
-        {isHovering && activeMovie === movie.id ? <PreviewVideoPlayer  filmSrc={movie.previewVideoLink} posterImage={movie.posterImage} play={isHovering}/>
+        {activeMovie === movie.id ? <PreviewVideoPlayer  filmSrc={movie.previewVideoLink} posterImage={movie.posterImage} play={activeMovie === movie.id}/>
           :
           <img
             src={movie.previewImage}

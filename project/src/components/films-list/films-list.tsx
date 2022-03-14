@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {FilmData} from '../../moks/films';
 import MovieCard from '../movie-card/movie-card';
 
@@ -10,27 +10,25 @@ function FilmsList({films}: FilmsListProps): JSX.Element {
 
   const [activeMovie, setActiveMovie] = useState(-1);
 
-  const [isHovering, setIsHovering] = useState(false);
-
   let timer: NodeJS.Timeout;
 
-  useEffect(() => {
+  function setTimer(id: number) {
 
     timer = setTimeout(() => {
-      setIsHovering(true);
+      setActiveMovie(id);
     }, 1000);
 
-    return () => {
-      clearTimeout(timer);
-      setIsHovering(false);
-    };
+  }
 
-  }, [activeMovie]);
+  function clearTimer() {
+    clearTimeout(timer);
+    setActiveMovie(-1);
+  }
 
   return (
     <div className="catalog__films-list">
 
-      {films.map((movie) => <MovieCard key={movie.id} onMouseOverCb={setActiveMovie} movie={movie} isHovering={isHovering} activeMovie={activeMovie}/>,
+      {films.map((movie) => <MovieCard key={movie.id} onMouseOverCb={setTimer} movie={movie} activeMovie={activeMovie} onMouseOutCb={clearTimer}/>,
       )}
     </div>
   );
