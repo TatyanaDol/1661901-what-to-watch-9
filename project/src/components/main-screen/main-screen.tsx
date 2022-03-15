@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import GenresList from '../genres-list/genres-list';
 import {useAppSelector} from '../../hooks/index';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 
 type MainScreenProps = {
@@ -16,7 +17,13 @@ type MainScreenProps = {
 
 function MainScreen({title, genre, year, films}: MainScreenProps): JSX.Element {
 
-  const {filteredFilms} = useAppSelector((state) => state);
+  const {allFilms, filteredFilms, isDataLoaded} = useAppSelector((state) => state);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <>
@@ -196,7 +203,7 @@ function MainScreen({title, genre, year, films}: MainScreenProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList films={films}/>
+          <GenresList films={allFilms}/>
 
           <FilmsList films={filteredFilms} />
 

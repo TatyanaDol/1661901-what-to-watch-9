@@ -11,14 +11,12 @@ import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import {FilmData, ReviewData} from '../../moks/films';
 
-
 type AppScreenProps = {
   films: FilmData[];
   reviews: ReviewData[];
 }
 
 function App({films, reviews}: AppScreenProps): JSX.Element {
-
 
   return (
     <BrowserRouter>
