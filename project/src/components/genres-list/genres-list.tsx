@@ -1,28 +1,22 @@
 import {FilmData} from '../../moks/films';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {changeGenre, filterFilmsByGenre} from '../../store/action';
+import {FILTER_ALL_GENRES} from '../../const';
 
 type GenresListProps = {
   films: FilmData[];
-}
-
-function createGenresList(films: FilmData[]) {
-  const genres: string[] = [];
-
-  films.forEach((movie) => {
-    if(!genres.includes(movie.genre)) {
-      genres.push(movie.genre);
-    }
-  });
-
-  return ['All genres', ...genres];
 }
 
 function GenresList({films}: GenresListProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const genresList = createGenresList(films);
+  const genresSet = new Set<string>();
+  films.forEach((movie) => {
+    genresSet.add(movie.genre);
+  });
+
+  const genresList = [FILTER_ALL_GENRES, ...genresSet];
 
   const {genre} = useAppSelector((state) => state);
 

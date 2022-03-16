@@ -1,22 +1,18 @@
 import FilmsList from '../films-list/films-list';
-import {FilmData} from '../../moks/films';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import GenresList from '../genres-list/genres-list';
 import {useAppSelector} from '../../hooks/index';
 
-
 type MainScreenProps = {
   title: string;
   genre: string;
   year: number;
-  films: FilmData[];
 }
 
+function MainScreen({title, genre, year}: MainScreenProps): JSX.Element {
 
-function MainScreen({title, genre, year, films}: MainScreenProps): JSX.Element {
-
-  const {filteredFilms} = useAppSelector((state) => state);
+  const {allFilms, filteredFilms} = useAppSelector((state) => state);
 
   return (
     <>
@@ -196,7 +192,7 @@ function MainScreen({title, genre, year, films}: MainScreenProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList films={films}/>
+          <GenresList films={allFilms}/>
 
           <FilmsList films={filteredFilms} />
 

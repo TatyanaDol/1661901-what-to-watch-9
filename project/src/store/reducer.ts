@@ -1,11 +1,24 @@
 import {createReducer} from '@reduxjs/toolkit';
-import mockFilms from '../moks/films';
-import {changeGenre, filterFilmsByGenre} from './action';
+import {changeGenre, filterFilmsByGenre, loadFilms, requireAuthorization, setError} from './action';
+import {AuthorizationStatus, FILTER_ALL_GENRES} from '../const';
+import {FilmsData} from '../types/film';
 
-const initialState = {
-  genre: 'All genres',
-  allFilms: mockFilms,
-  filteredFilms: mockFilms,
+type InitialState = {
+    genre: string,
+    allFilms: FilmsData,
+    filteredFilms: FilmsData,
+    authorizationStatus: AuthorizationStatus,
+    error: string,
+    isDataLoaded: boolean,
+  };
+
+const initialState: InitialState = {
+  genre: FILTER_ALL_GENRES,
+  allFilms: [],
+  filteredFilms: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: '',
+  isDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -15,7 +28,7 @@ const reducer = createReducer(initialState, (builder) => {
 
   })
     .addCase(filterFilmsByGenre, (state) => {
-      if(state.genre === 'All genres') {
+      if(state.genre === FILTER_ALL_GENRES) {
         state.filteredFilms = state.allFilms;
       }
       else {
@@ -23,6 +36,17 @@ const reducer = createReducer(initialState, (builder) => {
         state.filteredFilms = state.allFilms.filter((film) => film.genre === state.genre);
       }
 
+    })
+    .addCase(loadFilms, (state, action) => {
+      state.allFilms = action.payload;
+      state.filteredFilms = state.allFilms;
+      state.isDataLoaded = true;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 
