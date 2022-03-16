@@ -5,9 +5,11 @@ import App from './components/app/app';
 import {mockReviws} from './moks/films';
 import {store} from './store/index';
 import ErrorMessage from './components/error-message/error-message';
-import {fetchFilmsAction} from './store/api-actions';
+import {fetchFilmsAction, checkAuthAction, fetchPromoFilmAction} from './store/api-actions';
 
 store.dispatch(fetchFilmsAction());
+store.dispatch(checkAuthAction());
+store.dispatch(fetchPromoFilmAction());
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,18 +1,12 @@
 import FilmsList from '../films-list/films-list';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import GenresList from '../genres-list/genres-list';
 import {useAppSelector} from '../../hooks/index';
+import {UserAvatar} from '../user-avatar/user-avatar';
 
-type MainScreenProps = {
-  title: string;
-  genre: string;
-  year: number;
-}
 
-function MainScreen({title, genre, year}: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
 
-  const {allFilms, filteredFilms} = useAppSelector((state) => state);
+  const {allFilms, filteredFilms, promoFilm} = useAppSelector((state) => state);
 
   return (
     <>
@@ -129,39 +123,25 @@ function MainScreen({title, genre, year}: MainScreenProps): JSX.Element {
             </a>
           </div>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img
-                  src="img/avatar.jpg"
-                  alt="User avatar"
-                  width="63"
-                  height="63"
-                />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
-            </li>
-          </ul>
+          <UserAvatar />
         </header>
 
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={promoFilm?.posterImage}
+                alt={promoFilm?.name}
                 width="218"
                 height="327"
               />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{promoFilm?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__genre">{promoFilm?.genre}</span>
+                <span className="film-card__year">{promoFilm?.released}</span>
               </p>
 
               <div className="film-card__buttons">

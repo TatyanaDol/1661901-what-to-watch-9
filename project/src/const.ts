@@ -18,9 +18,10 @@ export enum AuthorizationStatus {
 }
 
 export enum APIRoute {
-    allFilms = '/films',
-    login = '/login',
-    logout = '/logout',
+    AllFilms = '/films',
+    Login = '/login',
+    Logout = '/logout',
+    Promo = '/promo',
 }
 
 export enum HTTP_CODE {
