@@ -11,12 +11,9 @@ function GenresList({films}: GenresListProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const genresSet = new Set<string>();
-  films.forEach((movie) => {
-    genresSet.add(movie.genre);
-  });
+  const genresSet = new Set<string>(films.map(({genre}) => genre));
 
-  const genresList = [FILTER_ALL_GENRES, ...genresSet];
+  const genresList = [FILTER_ALL_GENRES, ...genresSet].slice(0, 9);
 
   const {genre} = useAppSelector((state) => state);
 

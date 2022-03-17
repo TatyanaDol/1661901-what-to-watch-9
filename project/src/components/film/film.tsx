@@ -1,17 +1,15 @@
 import LogoWtw from '../logo-wtw/logo-wtw';
-import {FilmData} from '../../moks/films';
 import {useParams} from 'react-router-dom';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {UserAvatar} from '../user-avatar/user-avatar';
+import {useAppSelector} from '../../hooks/index';
 
-type FilmProps = {
-  films: FilmData[];
-}
+function Film(): JSX.Element {
 
-function Film({films}: FilmProps): JSX.Element {
+  const {allFilms} = useAppSelector((state) => state);
 
   const params = useParams();
-  const film = films[Number(params.id)];
+  const film = allFilms[Number(params.id)];
 
   return (
     <>
@@ -61,16 +59,7 @@ function Film({films}: FilmProps): JSX.Element {
               <LogoWtw />
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
-              </li>
-            </ul>
+            <UserAvatar />
           </header>
 
           <div className="film-card__wrap">

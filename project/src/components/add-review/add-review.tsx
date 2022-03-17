@@ -1,14 +1,14 @@
 import LogoWtw from '../logo-wtw/logo-wtw';
 import AddReviewForm from './add-review-form';
-import {FilmData} from '../../moks/films';
 import {useParams} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import ReviewsList from './reviews-list';
 import {ReviewData} from '../../moks/films';
 import React, {useState} from 'react';
+import {UserAvatar} from '../user-avatar/user-avatar';
+import {useAppSelector} from '../../hooks/index';
 
 type AddReviewProps = {
-  films: FilmData[];
   reviews: ReviewData[];
 }
 
@@ -17,11 +17,12 @@ type ReviewFormData = {
   'review-text': string;
 }
 
-function AddReview ({films, reviews}: AddReviewProps): JSX.Element {
+function AddReview ({reviews}: AddReviewProps): JSX.Element {
 
+  const {allFilms} = useAppSelector((state) => state);
 
   const params = useParams();
-  const film = films[Number(params.id)];
+  const film = allFilms[Number(params.id)];
 
   const [reviewsState, setReviewsState] = useState(reviews);
 
@@ -53,16 +54,7 @@ function AddReview ({films, reviews}: AddReviewProps): JSX.Element {
               <LogoWtw />
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <UserAvatar />
           </header>
 
           <div className="film-card__wrap">

@@ -1,14 +1,13 @@
-import {FilmData} from '../../moks/films';
 import {useParams} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/index';
 
-type PlayerProps = {
-  films: FilmData[];
-}
 
-function Player ({films}: PlayerProps): JSX.Element {
+function Player (): JSX.Element {
+
+  const {allFilms} = useAppSelector((state) => state);
 
   const params = useParams();
-  const film = films[Number(params.id)];
+  const film = allFilms[Number(params.id)];
 
   return (
     <div className="player">
