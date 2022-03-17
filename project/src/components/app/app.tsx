@@ -10,7 +10,6 @@ import SignIn from '../sign-in/sign-in';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import {ReviewData} from '../../moks/films';
-import LoadingScreen from '../loading-screen/loading-screen';
 import {useAppSelector} from '../../hooks/index';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
@@ -21,13 +20,7 @@ type AppScreenProps = {
 
 function App({reviews}: AppScreenProps): JSX.Element {
 
-  const {allFilms, isDataLoaded, authorizationStatus} = useAppSelector((state) => state);
-
-  if (!isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
-  }
+  const {allFilms, authorizationStatus} = useAppSelector((state) => state);
 
   return (
     <HistoryRouter history={browserHistory}>

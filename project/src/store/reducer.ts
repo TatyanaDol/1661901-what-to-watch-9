@@ -11,6 +11,7 @@ type InitialState = {
     error: string,
     isDataLoaded: boolean,
     promoFilm: FilmData | null,
+    isPromoDataLoaded: boolean,
   };
 
 const initialState: InitialState = {
@@ -21,6 +22,7 @@ const initialState: InitialState = {
   error: '',
   isDataLoaded: false,
   promoFilm: null,
+  isPromoDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -52,6 +54,8 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadPromoFilm, (state, action) => {
       state.promoFilm = action.payload;
+      state.isPromoDataLoaded = true;
+
     });
 });
 
