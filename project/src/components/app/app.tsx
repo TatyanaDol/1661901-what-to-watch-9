@@ -20,7 +20,8 @@ type AppScreenProps = {
 
 function App({reviews}: AppScreenProps): JSX.Element {
 
-  const {allFilms, authorizationStatus} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {allFilms} = useAppSelector(({DATA}) => DATA);
 
   return (
     <HistoryRouter history={browserHistory}>

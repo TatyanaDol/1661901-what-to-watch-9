@@ -19,7 +19,7 @@ type ReviewFormData = {
 
 function AddReview ({reviews}: AddReviewProps): JSX.Element {
 
-  const {allFilms} = useAppSelector((state) => state);
+  const {allFilms} = useAppSelector(({DATA}) => DATA);
 
   const params = useParams();
   const film = allFilms[Number(params.id)];
