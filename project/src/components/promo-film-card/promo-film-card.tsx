@@ -1,6 +1,8 @@
 import {useAppSelector} from '../../hooks/index';
 import {UserAvatar} from '../user-avatar/user-avatar';
 import LoadingScreen from '../loading-screen/loading-screen';
+import LogoWtw from '../logo-wtw/logo-wtw';
+
 
 export function PromoFilmCard(): JSX.Element {
 
@@ -19,11 +21,7 @@ export function PromoFilmCard(): JSX.Element {
 
       <header className="page-header film-card__head">
         <div className="logo">
-          <a className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
+          <LogoWtw isLight={false} />
         </div>
 
         <UserAvatar />

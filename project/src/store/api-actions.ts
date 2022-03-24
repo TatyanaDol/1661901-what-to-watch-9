@@ -5,7 +5,7 @@ import {FilmsData, FilmData} from '../types/film';
 import {APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus, AppRoute} from '../const';
 import {redirectToRoute} from './action';
 import {loadFilms, loadPromoFilm} from './films-data-loading-process/films-data-loading-process';
-import {setError} from './site-process/site-process';
+import {filterFilmsByGenre, setError} from './site-process/site-process';
 import {requireAuthorization} from './user-process/user-process';
 import {handleError} from '../services/handle-error';
 import {saveToken} from '../services/token';
@@ -19,6 +19,7 @@ export const fetchFilmsAction = createAsyncThunk(
     try {
       const {data} = await api.get<FilmsData>(APIRoute.AllFilms);
       store.dispatch(loadFilms(data));
+      store.dispatch(filterFilmsByGenre(data));
     } catch (error) {
       handleError(error);
     }

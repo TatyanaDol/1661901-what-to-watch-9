@@ -5,7 +5,9 @@ import LoadingScreen from '../loading-screen/loading-screen';
 
 export function FilmsCatalog(): JSX.Element {
 
-  const {allFilms, filteredFilms, isDataLoaded} = useAppSelector(({DATA}) => DATA);
+  const {allFilms, isDataLoaded} = useAppSelector(({DATA}) => DATA);
+
+  const {filteredFilms} = useAppSelector(({SITE}) => SITE);
 
   return (
     <section className="catalog">

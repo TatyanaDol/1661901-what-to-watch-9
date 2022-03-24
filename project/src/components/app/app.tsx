@@ -37,6 +37,7 @@ function App({reviews}: AppScreenProps): JSX.Element {
         />
         <Route path={AppRoute.Film} element={<Film />} />
         <Route path={AppRoute.AddReview} element={<AddReview reviews={reviews}/>} />
+        <Route path={AppRoute.FilmDetails} element={<AddReview reviews={reviews}/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HistoryRouter>);

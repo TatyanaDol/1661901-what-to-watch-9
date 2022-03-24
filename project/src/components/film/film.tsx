@@ -3,13 +3,22 @@ import {useParams} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import {UserAvatar} from '../user-avatar/user-avatar';
 import {useAppSelector} from '../../hooks/index';
+import NotFound from '../not-found/not-found';
+import {FilmCardNavigation} from '../film-card-navigation/film-card-navigation';
 
 function Film(): JSX.Element {
 
   const {allFilms} = useAppSelector(({DATA}) => DATA);
 
   const params = useParams();
-  const film = allFilms[Number(params.id)];
+  const film = allFilms.find((element) => element.id === Number(params.id));
+
+  if(!film) {
+
+    return (
+      <NotFound />
+    );
+  }
 
   return (
     <>
@@ -56,7 +65,7 @@ function Film(): JSX.Element {
 
           <header className="page-header film-card__head">
             <div className="logo">
-              <LogoWtw />
+              <LogoWtw isLight={false} />
             </div>
 
             <UserAvatar />
@@ -96,19 +105,7 @@ function Film(): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to={`/films/${film.id}/review`} className="film-nav__link">Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
+              <FilmCardNavigation filmId={film.id}/>
 
               <div className="film-rating">
                 <div className="film-rating__score">{film.rating}</div>

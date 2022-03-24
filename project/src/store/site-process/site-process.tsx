@@ -2,10 +2,10 @@ import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import {SiteProcess} from '../../types/state';
 import {FILTER_ALL_GENRES} from '../../const';
+import { FilmData } from '../../types/film';
 
 
 const initialState: SiteProcess = {
-  allFilms: [],
   filteredFilms: [],
   genre: FILTER_ALL_GENRES,
   error: '',
@@ -15,13 +15,13 @@ export const siteProcess = createSlice({
   name: NameSpace.site,
   initialState,
   reducers: {
-    filterFilmsByGenre: (state) => {
+    filterFilmsByGenre: (state, action) => {
       if(state.genre === FILTER_ALL_GENRES) {
-        state.filteredFilms = state.allFilms;
+        state.filteredFilms = action.payload;
       }
       else {
         state.filteredFilms = [];
-        state.filteredFilms = state.allFilms.filter((film) => film.genre === state.genre);
+        state.filteredFilms = action.payload.filter((film: FilmData) => film.genre === state.genre);
       }
 
     },

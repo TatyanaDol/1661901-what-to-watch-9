@@ -5,7 +5,6 @@ import {FilmsDataLoadingProcess} from '../../types/state';
 
 const initialState: FilmsDataLoadingProcess = {
   allFilms: [],
-  filteredFilms: [],
   isDataLoaded: false,
   promoFilm: null,
   isPromoDataLoaded: false,
@@ -17,7 +16,6 @@ export const filmsDataLoadingProcess = createSlice({
   reducers: {
     loadFilms: (state, action) => {
       state.allFilms = action.payload;
-      state.filteredFilms = state.allFilms;
       state.isDataLoaded = true;
     },
     loadPromoFilm: (state, action) => {

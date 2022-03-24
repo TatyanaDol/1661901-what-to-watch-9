@@ -16,6 +16,7 @@ function GenresList({films}: GenresListProps): JSX.Element {
   const genresList = [FILTER_ALL_GENRES, ...genresSet].slice(0, 9);
 
   const {genre} = useAppSelector(({SITE}) => SITE);
+  const {allFilms} = useAppSelector(({DATA}) => DATA);
 
   return (
     <ul className="catalog__genres-list">
@@ -28,7 +29,7 @@ function GenresList({films}: GenresListProps): JSX.Element {
           <li key={element} className={`catalog__genres-item ${isActive && 'catalog__genres-item--active'}`}>
             <a href="#" className="catalog__genres-link" onClick={(evt) => {
               dispatch(changeGenre(element));
-              dispatch(filterFilmsByGenre());
+              dispatch(filterFilmsByGenre(allFilms));
             }}
             >
               {element}
