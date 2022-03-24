@@ -54,7 +54,7 @@ function MyList({films}: MyListFilmsProps): JSX.Element {
       <div className="user-page">
         <header className="page-header user-page__head">
           <div className="logo">
-            <LogoWtw />
+            <LogoWtw isLight={false} />
           </div>
 
           <h1 className="page-title user-page__title">My list</h1>

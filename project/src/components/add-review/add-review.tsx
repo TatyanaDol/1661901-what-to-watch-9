@@ -1,12 +1,13 @@
 import LogoWtw from '../logo-wtw/logo-wtw';
 import AddReviewForm from './add-review-form';
 import {useParams} from 'react-router-dom';
-import {Link} from 'react-router-dom';
 import ReviewsList from './reviews-list';
 import {ReviewData} from '../../moks/films';
 import React, {useState} from 'react';
 import {UserAvatar} from '../user-avatar/user-avatar';
 import {useAppSelector} from '../../hooks/index';
+import NotFound from '../not-found/not-found';
+import {FilmCardNavigation} from '../film-card-navigation/film-card-navigation';
 
 type AddReviewProps = {
   reviews: ReviewData[];
@@ -19,10 +20,10 @@ type ReviewFormData = {
 
 function AddReview ({reviews}: AddReviewProps): JSX.Element {
 
-  const {allFilms} = useAppSelector((state) => state);
+  const {allFilms} = useAppSelector(({DATA}) => DATA);
 
   const params = useParams();
-  const film = allFilms[Number(params.id)];
+  const film = allFilms.find((element) => element.id === Number(params.id));
 
   const [reviewsState, setReviewsState] = useState(reviews);
 
@@ -40,6 +41,12 @@ function AddReview ({reviews}: AddReviewProps): JSX.Element {
     setReviewsState([...reviewsState, review]);
   }
 
+  if(!film) {
+
+    return (
+      <NotFound />
+    );
+  }
 
   return (
     <>
@@ -51,7 +58,7 @@ function AddReview ({reviews}: AddReviewProps): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header film-card__head">
             <div className="logo">
-              <LogoWtw />
+              <LogoWtw isLight={false} />
             </div>
 
             <UserAvatar />
@@ -91,19 +98,7 @@ function AddReview ({reviews}: AddReviewProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item film-nav__item--active">
-                    <Link to={`/films/${film.id}/review`} className="film-nav__link">Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
+              <FilmCardNavigation filmId={film.id}/>
 
               <div className="film-card__reviews film-card__row">
 

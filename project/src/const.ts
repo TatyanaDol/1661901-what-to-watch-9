@@ -9,6 +9,7 @@ export enum AppRoute {
     Film = '/films/:id',
     AddReview = '/films/:id/review',
     Player = '/player/:id',
+    FilmDetails = '/films/:id/details',
   }
 
 export enum AuthorizationStatus {
@@ -29,3 +30,9 @@ export enum HTTP_CODE {
     UNAUTHORIZED = 401,
     NOT_FOUND = 404,
 }
+
+export enum NameSpace {
+    data = 'DATA',
+    site = 'SITE',
+    user = 'USER',
+  }

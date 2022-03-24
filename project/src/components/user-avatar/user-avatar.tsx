@@ -5,7 +5,7 @@ import {useAppSelector} from '../../hooks/index';
 
 export function UserAvatar(): JSX.Element {
 
-  const {authorizationStatus} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   if(authorizationStatus === AuthorizationStatus.Auth) {
     return (
