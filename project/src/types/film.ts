@@ -31,3 +31,7 @@ export type ReviewData = {
   }
 
 export type FilmsData = FilmData[];
+
+export type FilmId = {
+  filmId: number | undefined
+}
