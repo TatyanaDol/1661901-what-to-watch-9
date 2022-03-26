@@ -1,67 +1,33 @@
 import AddReviewForm from './add-review-form';
 import {useParams} from 'react-router-dom';
 import ReviewsList from './reviews-list';
-import {ReviewData} from '../../moks/films';
-import React, {useState} from 'react';
 import {useAppSelector} from '../../hooks/index';
-import NotFound from '../not-found/not-found';
 import {FilmCardNavigation} from '../film-card-navigation/film-card-navigation';
 import { FilmCardNavigationItems } from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type AddReviewProps = {
-  reviews: ReviewData[];
-}
 
-type ReviewFormData = {
-  rating: number;
-  'review-text': string;
-}
+function AddReview (): JSX.Element {
 
-function AddReview ({reviews}: AddReviewProps): JSX.Element {
-
-  const {allFilms} = useAppSelector(({DATA}) => DATA);
+  const {filmReviews, isFilmReviewsDataLoaded, openedFilm} = useAppSelector(({DATA}) => DATA);
 
   const params = useParams();
-  const film = allFilms.find((element) => element.id === Number(params.id));
-
-  const [reviewsState, setReviewsState] = useState(reviews);
-
-  function pushNewReview (newReview: ReviewFormData) {
-    const review: ReviewData = {
-      id: reviewsState[reviewsState.length - 1].id + 1,
-      comment: newReview['review-text'],
-      date: '2000',
-      rating: newReview.rating,
-      user: {
-        id: 333,
-        name: '33',
-      },
-    };
-    setReviewsState([...reviewsState, review]);
-  }
-
-  if(!film) {
-
-    return (
-      <NotFound />
-    );
-  }
 
   return (
     <>
       <div className="film-card__wrap film-card__translate-top">
         <div className="film-card__info">
           <div className="film-card__poster film-card__poster--big">
-            <img src={film.posterImage} alt={film.name} width="218" height="327" />
+            <img src={openedFilm?.posterImage} alt={openedFilm?.name} width="218" height="327" />
           </div>
 
           <div className="film-card__desc">
-            <FilmCardNavigation filmId={film.id} activeLink={FilmCardNavigationItems.Reviews}/>
+            <FilmCardNavigation filmId={Number(params.id)} activeLink={FilmCardNavigationItems.Reviews}/>
 
             <div className="film-card__reviews film-card__row">
 
-              <ReviewsList reviews={reviewsState}/>
-
+              {!isFilmReviewsDataLoaded ? <LoadingScreen /> :
+                <ReviewsList reviews={filmReviews}/>}
               <div className="film-card__reviews-col">
                 <div className="review">
                   <blockquote className="review__quote">
@@ -108,7 +74,7 @@ function AddReview ({reviews}: AddReviewProps): JSX.Element {
       </div>
 
       <div className="add-review">
-        <AddReviewForm pushNewReviewCb={pushNewReview}/>
+        <AddReviewForm filmId={Number(params.id)} />
       </div>
 
 

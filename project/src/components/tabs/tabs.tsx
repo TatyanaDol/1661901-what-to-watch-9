@@ -7,7 +7,6 @@ import {useEffect} from 'react';
 import { FilmCardNavigationItems } from '../../const';
 import { MoviePageDetails } from '../movie-page-details/movie-page-details';
 import AddReview from '../add-review/add-review';
-import {mockReviws} from '../../moks/films';
 
 type TabsProps = {
     film: FilmData;
@@ -17,19 +16,15 @@ export function Tabs({film}: TabsProps): JSX.Element {
 
   const [activePage, setActivePage] = useState('');
 
-  const path = useLocation();
-
-  const pathItems = path.pathname.split('/');
-
-  const navItem =  pathItems[3] || 'overview';
+  const {hash} = useLocation();
 
   useEffect(() => {
-    setActivePage(navItem);
+    setActivePage(hash);
 
-  }, [navItem]);
+  }, [hash]);
 
   if(activePage === FilmCardNavigationItems.Reviews) {
-    return <AddReview reviews={mockReviws}/>;
+    return <AddReview />;
   }
 
   return (

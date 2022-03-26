@@ -10,6 +10,10 @@ const initialState: FilmsDataLoadingProcess = {
   isPromoDataLoaded: false,
   similarFilms: [],
   isSimilarFilmsDataLoaded: false,
+  openedFilm: null,
+  isOpenedFilmDataLoaded: false,
+  filmReviews: [],
+  isFilmReviewsDataLoaded: false,
 };
 
 export const filmsDataLoadingProcess = createSlice({
@@ -28,7 +32,15 @@ export const filmsDataLoadingProcess = createSlice({
       state.similarFilms = action.payload;
       state.isSimilarFilmsDataLoaded = true;
     },
+    loadOpenedFilm: (state, action) => {
+      state.openedFilm = action.payload;
+      state.isOpenedFilmDataLoaded = true;
+    },
+    loadFilmReviews: (state, action) => {
+      state.filmReviews = action.payload;
+      state.isFilmReviewsDataLoaded = true;
+    },
   },
 });
 
-export const {loadFilms, loadPromoFilm, loadSimilarFilms} = filmsDataLoadingProcess.actions;
+export const {loadFilms, loadPromoFilm, loadSimilarFilms, loadOpenedFilm, loadFilmReviews} = filmsDataLoadingProcess.actions;

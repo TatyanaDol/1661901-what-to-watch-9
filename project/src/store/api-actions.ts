@@ -1,10 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from './index';
 import {store} from './index';
-import {FilmsData, FilmData, FilmId} from '../types/film';
+import {FilmsData, FilmData, FilmId, NewReviewData} from '../types/film';
 import {APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus, AppRoute} from '../const';
 import {redirectToRoute} from './action';
-import {loadFilms, loadPromoFilm, loadSimilarFilms} from './films-data-loading-process/films-data-loading-process';
+import {loadFilms, loadPromoFilm, loadSimilarFilms, loadOpenedFilm, loadFilmReviews} from './films-data-loading-process/films-data-loading-process';
 import {filterFilmsByGenre, setError} from './site-process/site-process';
 import {requireAuthorization} from './user-process/user-process';
 import {handleError} from '../services/handle-error';
@@ -83,6 +83,44 @@ export const fetchSimilarFilmsAction = createAsyncThunk(
       const {data} = await api.get<FilmData>(`/films/${filmId}/similar`);
       store.dispatch(loadSimilarFilms(data));
     } catch (error) {
+      handleError(error);
+    }
+  },
+);
+
+export const fetchOpenedFilmAction = createAsyncThunk(
+  'fetchOpenedFilm',
+  async ({filmId}: FilmId) => {
+    try {
+      const {data} = await api.get<FilmData>(`/films/${filmId}`);
+      store.dispatch(loadOpenedFilm(data));
+    } catch (error) {
+      handleError(error);
+      store.dispatch(redirectToRoute(AppRoute.NotFound));
+    }
+  },
+);
+
+export const fetchOpenedFilmReviewsAction = createAsyncThunk(
+  'fetchOpenedFilmReviews',
+  async ({filmId}: FilmId) => {
+    try {
+      const {data} = await api.get<FilmData>(`/comments/${filmId}`);
+      store.dispatch(loadFilmReviews(data));
+    } catch (error) {
+      handleError(error);
+    }
+  },
+);
+
+
+export const addNewReviewAction = createAsyncThunk(
+  'addNewReview',
+  async ({comment, rating, filmId}: NewReviewData) => {
+    try {
+      const {data} = await api.post<UserData>(`/comments/${filmId}`, {comment, rating});
+      store.dispatch(loadFilmReviews(data));
+    } catch(error) {
       handleError(error);
     }
   },
