@@ -4,7 +4,8 @@ import {Link} from 'react-router-dom';
 import {UserAvatar} from '../user-avatar/user-avatar';
 import {useAppSelector} from '../../hooks/index';
 import NotFound from '../not-found/not-found';
-import {FilmCardNavigation} from '../film-card-navigation/film-card-navigation';
+import { Tabs } from '../tabs/tabs';
+import { CatalogMoreLikeThis } from '../catalog-more-like-this/catalog-more-like-this';
 
 function Film(): JSX.Element {
 
@@ -98,87 +99,18 @@ function Film(): JSX.Element {
           </div>
         </div>
 
-        <div className="film-card__wrap film-card__translate-top">
-          <div className="film-card__info">
-            <div className="film-card__poster film-card__poster--big">
-              <img src={film.posterImage} alt={film.name} width="218" height="327" />
-            </div>
 
-            <div className="film-card__desc">
-              <FilmCardNavigation filmId={film.id}/>
+        <Tabs film={film} />
 
-              <div className="film-rating">
-                <div className="film-rating__score">{film.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">good</span>
-                  <span className="film-rating__count">{film.scoresCount} ratings</span>
-                </p>
-              </div>
 
-              <div className="film-card__text">
-                <p>{film.description}</p>
-
-                <p>{film.description}</p>
-
-                <p className="film-card__director"><strong>Director: {film.director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {film.starring} and other</strong></p>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Macbeth</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
-              </h3>
-            </article>
-          </div>
-        </section>
+        <CatalogMoreLikeThis filmId={film.id} />
 
         <footer className="page-footer">
           <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            <LogoWtw isLight />
           </div>
 
           <div className="copyright">

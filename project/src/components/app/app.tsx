@@ -2,7 +2,6 @@ import React from 'react';
 import MainScreen from '../main-screen/main-screen';
 import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import AddReview from '../add-review/add-review';
 import Film from '../film/film';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
@@ -36,8 +35,8 @@ function App({reviews}: AppScreenProps): JSX.Element {
         }
         />
         <Route path={AppRoute.Film} element={<Film />} />
-        <Route path={AppRoute.AddReview} element={<AddReview reviews={reviews}/>} />
-        <Route path={AppRoute.FilmDetails} element={<AddReview reviews={reviews}/>} />
+        <Route path={AppRoute.AddReview} element={<Film />} />
+        <Route path={AppRoute.FilmDetails} element={<Film />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HistoryRouter>);

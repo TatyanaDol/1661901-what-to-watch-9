@@ -8,6 +8,8 @@ const initialState: FilmsDataLoadingProcess = {
   isDataLoaded: false,
   promoFilm: null,
   isPromoDataLoaded: false,
+  similarFilms: [],
+  isSimilarFilmsDataLoaded: false,
 };
 
 export const filmsDataLoadingProcess = createSlice({
@@ -22,7 +24,11 @@ export const filmsDataLoadingProcess = createSlice({
       state.promoFilm = action.payload;
       state.isPromoDataLoaded = true;
     },
+    loadSimilarFilms: (state, action) => {
+      state.similarFilms = action.payload;
+      state.isSimilarFilmsDataLoaded = true;
+    },
   },
 });
 
-export const {loadFilms, loadPromoFilm} = filmsDataLoadingProcess.actions;
+export const {loadFilms, loadPromoFilm, loadSimilarFilms} = filmsDataLoadingProcess.actions;

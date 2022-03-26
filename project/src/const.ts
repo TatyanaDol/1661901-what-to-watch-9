@@ -36,3 +36,9 @@ export enum NameSpace {
     site = 'SITE',
     user = 'USER',
   }
+
+export enum FilmCardNavigationItems {
+    Overview = 'overview',
+    Details = 'details',
+    Reviews = 'review',
+}

@@ -7,6 +7,8 @@ export type FilmsDataLoadingProcess = {
   isDataLoaded: boolean,
   promoFilm: FilmData | null,
   isPromoDataLoaded: boolean,
+  similarFilms: FilmsData,
+  isSimilarFilmsDataLoaded: boolean,
 };
 
 export type SiteProcess = {

@@ -1,10 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from './index';
 import {store} from './index';
-import {FilmsData, FilmData} from '../types/film';
+import {FilmsData, FilmData, FilmId} from '../types/film';
 import {APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus, AppRoute} from '../const';
 import {redirectToRoute} from './action';
-import {loadFilms, loadPromoFilm} from './films-data-loading-process/films-data-loading-process';
+import {loadFilms, loadPromoFilm, loadSimilarFilms} from './films-data-loading-process/films-data-loading-process';
 import {filterFilmsByGenre, setError} from './site-process/site-process';
 import {requireAuthorization} from './user-process/user-process';
 import {handleError} from '../services/handle-error';
@@ -72,6 +72,18 @@ export const loginAction = createAsyncThunk(
     } catch(error) {
       handleError(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const fetchSimilarFilmsAction = createAsyncThunk(
+  'fetchSimilarFilms',
+  async ({filmId}: FilmId) => {
+    try {
+      const {data} = await api.get<FilmData>(`/films/${filmId}/similar`);
+      store.dispatch(loadSimilarFilms(data));
+    } catch (error) {
+      handleError(error);
     }
   },
 );
