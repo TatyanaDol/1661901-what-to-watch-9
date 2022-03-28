@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { FILM_COUNT_PER_STEP } from '../../const';
 import { useAppSelector } from '../../hooks';
-import {FilmData} from '../../moks/films';
+import { FilmData } from '../../types/film';
 import MovieCard from '../movie-card/movie-card';
 import { ShowMoreButton } from '../show-more-button/show-more-button';
 

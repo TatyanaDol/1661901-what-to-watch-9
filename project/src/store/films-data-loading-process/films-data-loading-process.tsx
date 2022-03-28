@@ -10,6 +10,12 @@ const initialState: FilmsDataLoadingProcess = {
   isPromoDataLoaded: false,
   similarFilms: [],
   isSimilarFilmsDataLoaded: false,
+  openedFilm: null,
+  isOpenedFilmDataLoaded: false,
+  filmReviews: [],
+  isFilmReviewsDataLoaded: false,
+  myListFilms: [],
+  isMyListFilmsDataLoaded: false,
 };
 
 export const filmsDataLoadingProcess = createSlice({
@@ -28,7 +34,29 @@ export const filmsDataLoadingProcess = createSlice({
       state.similarFilms = action.payload;
       state.isSimilarFilmsDataLoaded = true;
     },
+    loadOpenedFilm: (state, action) => {
+      state.openedFilm = action.payload;
+      state.isOpenedFilmDataLoaded = true;
+    },
+    loadFilmReviews: (state, action) => {
+      state.filmReviews = action.payload;
+      state.isFilmReviewsDataLoaded = true;
+    },
+    loadMyListFilms: (state, action) => {
+      state.myListFilms = action.payload;
+      state.isMyListFilmsDataLoaded = true;
+    },
+    changeMyListFilms: (state, action) => {
+      const {data, status} = action.payload;
+      if(status) {
+        state.myListFilms = [...state.myListFilms, action.payload];
+      }
+      else {
+        const index = state.myListFilms.findIndex((element) => element.id === data.id);
+        state.myListFilms.splice(index, 1);
+      }
+    },
   },
 });
 
-export const {loadFilms, loadPromoFilm, loadSimilarFilms} = filmsDataLoadingProcess.actions;
+export const {loadFilms, loadPromoFilm, loadSimilarFilms, loadOpenedFilm, loadFilmReviews, loadMyListFilms, changeMyListFilms} = filmsDataLoadingProcess.actions;

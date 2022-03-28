@@ -1,7 +1,7 @@
-import {FilmData} from '../../moks/films';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {changeGenre, filterFilmsByGenre} from '../../store/site-process/site-process';
 import {FILTER_ALL_GENRES} from '../../const';
+import { FilmData } from '../../types/film';
 
 type GenresListProps = {
   films: FilmData[];

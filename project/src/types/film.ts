@@ -32,6 +32,19 @@ export type ReviewData = {
 
 export type FilmsData = FilmData[];
 
+export type ReviewsData = ReviewData[];
+
+export type NewReviewData = {
+  comment: string
+  rating: number
+  filmId: number
+}
+
 export type FilmId = {
-  filmId: number | undefined
+  filmId?: number
+}
+
+export type MyListStatusData = {
+  filmId: number
+  status: number
 }

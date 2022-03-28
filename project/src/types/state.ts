@@ -1,6 +1,6 @@
 import {store} from '../store/index';
 import {AuthorizationStatus} from '../const';
-import {FilmsData, FilmData} from '../types/film';
+import {FilmsData, FilmData, ReviewsData} from '../types/film';
 
 export type FilmsDataLoadingProcess = {
   allFilms: FilmsData,
@@ -9,6 +9,12 @@ export type FilmsDataLoadingProcess = {
   isPromoDataLoaded: boolean,
   similarFilms: FilmsData,
   isSimilarFilmsDataLoaded: boolean,
+  openedFilm: FilmData | null,
+  isOpenedFilmDataLoaded: boolean,
+  filmReviews: ReviewsData,
+  isFilmReviewsDataLoaded: boolean,
+  myListFilms: FilmsData,
+  isMyListFilmsDataLoaded: boolean,
 };
 
 export type SiteProcess = {
@@ -18,7 +24,7 @@ export type SiteProcess = {
 };
 
 export type UserProcess = {
-  authorizationStatus: AuthorizationStatus
+  authorizationStatus: AuthorizationStatus,
 };
 
 export type State = ReturnType<typeof store.getState>;

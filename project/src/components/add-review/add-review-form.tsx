@@ -1,20 +1,18 @@
-import React, {useState} from 'react';
+import React, {FormEvent, useState} from 'react';
+import { useAppDispatch } from '../../hooks';
+import { addNewReviewAction } from '../../store/api-actions';
+import { NewReviewData } from '../../types/film';
 
 type AddReviewFormProps = {
-  pushNewReviewCb: (newReview: any) => void
+  filmId: number,
 }
 
-function AddReviewForm ({pushNewReviewCb}: AddReviewFormProps): JSX.Element {
+function AddReviewForm ({filmId}: AddReviewFormProps): JSX.Element {
 
   const [reviewFormData, setReviewFormData] = useState({
-    rating: '',
+    rating: 0,
     'review-text': '',
   });
-
-  function formSubmitHandler (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    evt.preventDefault();
-    pushNewReviewCb(reviewFormData);
-  }
 
   const formDataChangeHandler = (evt: React.FormEvent<HTMLDivElement>) => {
     evt.preventDefault();
@@ -28,8 +26,24 @@ function AddReviewForm ({pushNewReviewCb}: AddReviewFormProps): JSX.Element {
     setReviewFormData({...reviewFormData, [name]: value});
   };
 
+  const dispatch = useAppDispatch();
+
+  const onSubmit = (newReviewData: NewReviewData) => {
+    dispatch(addNewReviewAction(newReviewData));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    onSubmit({
+      comment: reviewFormData['review-text'],
+      rating: reviewFormData.rating,
+      filmId: filmId,
+    });
+
+  };
+
   return (
-    <form action="#" className="add-review__form">
+    <form action="#" className="add-review__form" onSubmit={handleSubmit}>
       <div className="rating">
         <div className="rating__stars" onChange={formDataChangeHandler}>
           <input className="rating__input" id="star-10" type="radio" name="rating" value="10" />
@@ -65,9 +79,9 @@ function AddReviewForm ({pushNewReviewCb}: AddReviewFormProps): JSX.Element {
       </div>
 
       <div className="add-review__text">
-        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onInput={formDataTextInputHandler}></textarea>
+        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" minLength={50} maxLength={400} onInput={formDataTextInputHandler}></textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit" onClick={formSubmitHandler}>Post</button>
+          <button className="add-review__btn" type="submit">Post</button>
         </div>
       </div>
     </form>

@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
+import { FilmData } from '../../types/film';
 import PreviewVideoPlayer from '../preview-video-player/preview-video-player';
-import {FilmData} from '../../moks/films';
+
 
 type SmallMovieCardProps = {
   onMouseOverCb: (id: number) => void;

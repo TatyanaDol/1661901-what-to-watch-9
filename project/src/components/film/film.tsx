@@ -1,25 +1,40 @@
 import LogoWtw from '../logo-wtw/logo-wtw';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import {UserAvatar} from '../user-avatar/user-avatar';
-import {useAppSelector} from '../../hooks/index';
-import NotFound from '../not-found/not-found';
+import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import { Tabs } from '../tabs/tabs';
 import { CatalogMoreLikeThis } from '../catalog-more-like-this/catalog-more-like-this';
+import { MouseEvent, useEffect } from 'react';
+import { fetchOpenedFilmAction, fetchOpenedFilmReviewsAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { AuthorizationStatus } from '../../const';
+import { ButtonMyList } from '../button-my-list/button-my-list';
 
 function Film(): JSX.Element {
 
-  const {allFilms} = useAppSelector(({DATA}) => DATA);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   const params = useParams();
-  const film = allFilms.find((element) => element.id === Number(params.id));
 
-  if(!film) {
+  const navigate = useNavigate();
 
-    return (
-      <NotFound />
-    );
+  function handlePlayerButtonClick(evt: MouseEvent<HTMLButtonElement>) {
+    evt.preventDefault();
+    navigate(`/player/${params.id}` );
   }
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+
+    dispatch(fetchOpenedFilmAction({filmId: Number(params.id)} ));
+    dispatch(fetchOpenedFilmReviewsAction({filmId: Number(params.id)} ));
+
+  },[params.id]);
+
+  const {openedFilm, isOpenedFilmDataLoaded} = useAppSelector(({DATA}) => DATA);
+
 
   return (
     <>
@@ -57,56 +72,53 @@ function Film(): JSX.Element {
       </div>
 
       <section className="film-card film-card--full">
-        <div className="film-card__hero">
-          <div className="film-card__bg">
-            <img src={film.backgroundImage} alt={film.name} />
-          </div>
+        {!isOpenedFilmDataLoaded ? <LoadingScreen /> :
+          <>
+            <div className="film-card__hero">
+              <div className="film-card__bg">
+                <img src={openedFilm?.backgroundImage} alt={openedFilm?.name} />
+              </div>
 
-          <h1 className="visually-hidden">WTW</h1>
+              <h1 className="visually-hidden">WTW</h1>
 
-          <header className="page-header film-card__head">
-            <div className="logo">
-              <LogoWtw isLight={false} />
-            </div>
+              <header className="page-header film-card__head">
+                <div className="logo">
+                  <LogoWtw isLight={false} />
+                </div>
 
-            <UserAvatar />
-          </header>
+                <UserAvatar />
+              </header>
 
-          <div className="film-card__wrap">
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{film.name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.released}</span>
-              </p>
+              <div className="film-card__wrap">
+                <div className="film-card__desc">
+                  <h2 className="film-card__title">{openedFilm?.name}</h2>
+                  <p className="film-card__meta">
+                    <span className="film-card__genre">{openedFilm?.genre}</span>
+                    <span className="film-card__year">{openedFilm?.released}</span>
+                  </p>
 
-              <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-                <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
+                  <div className="film-card__buttons">
+                    <button className="btn btn--play film-card__button" type="button" onClick={handlePlayerButtonClick}>
+                      <svg viewBox="0 0 19 19" width="19" height="19">
+                        <use xlinkHref="#play-s"></use>
+                      </svg>
+                      <span>Play</span>
+                    </button>
+                    <ButtonMyList filmIsFavorite={openedFilm?.isFavorite} filmId={openedFilm?.id} />
+                    {
+                      authorizationStatus === AuthorizationStatus.Auth &&
+                    <Link to={`/films/${openedFilm?.id}/review`} className="btn film-card__button">Add review</Link>
+                    }
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-
-
-        <Tabs film={film} />
-
-
+            {openedFilm !== null && <Tabs film={openedFilm} />}
+          </>}
       </section>
 
       <div className="page-content">
-        <CatalogMoreLikeThis filmId={film.id} />
+        <CatalogMoreLikeThis filmId={Number(params.id)} />
 
         <footer className="page-footer">
           <div className="logo">

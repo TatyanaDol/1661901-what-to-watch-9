@@ -2,11 +2,20 @@ import {useAppSelector} from '../../hooks/index';
 import {UserAvatar} from '../user-avatar/user-avatar';
 import LoadingScreen from '../loading-screen/loading-screen';
 import LogoWtw from '../logo-wtw/logo-wtw';
+import { useNavigate } from 'react-router-dom';
+import { MouseEvent } from 'react';
 
 
 export function PromoFilmCard(): JSX.Element {
 
   const {promoFilm, isPromoDataLoaded} = useAppSelector(({DATA}) => DATA);
+
+  const navigate = useNavigate();
+
+  function handlePlayerButtonClick(evt: MouseEvent<HTMLButtonElement>) {
+    evt.preventDefault();
+    navigate(`/player/${promoFilm?.id}` );
+  }
 
   return (
     <section className="film-card">
@@ -50,6 +59,7 @@ export function PromoFilmCard(): JSX.Element {
                 <button
                   className="btn btn--play film-card__button"
                   type="button"
+                  onClick={handlePlayerButtonClick}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>

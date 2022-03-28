@@ -8,19 +8,14 @@ import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import {ReviewData} from '../../moks/films';
 import {useAppSelector} from '../../hooks/index';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import AddReview from '../add-review/add-review';
 
-type AppScreenProps = {
-  reviews: ReviewData[];
-}
-
-function App({reviews}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
 
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
-  const {allFilms} = useAppSelector(({DATA}) => DATA);
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -30,13 +25,17 @@ function App({reviews}: AppScreenProps): JSX.Element {
         <Route path={AppRoute.Player} element={<Player />} />
         <Route path={AppRoute.MyList} element={
           <PrivateRoute authorizationStatus={authorizationStatus}>
-            <MyList films={allFilms}/>
+            <MyList />
           </PrivateRoute>
         }
         />
         <Route path={AppRoute.Film} element={<Film />} />
-        <Route path={AppRoute.AddReview} element={<Film />} />
-        <Route path={AppRoute.FilmDetails} element={<Film />} />
+        <Route path={AppRoute.AddReview} element={
+          <PrivateRoute authorizationStatus={authorizationStatus}>
+            <AddReview />
+          </PrivateRoute>
+        }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HistoryRouter>);
@@ -44,3 +43,4 @@ function App({reviews}: AppScreenProps): JSX.Element {
 }
 
 export default App;
+
