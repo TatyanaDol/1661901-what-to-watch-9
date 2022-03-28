@@ -15,10 +15,10 @@ export function FilmCardNavigation({filmId, activeLink}: FilmCardNavigationProps
           <Link to={`/films/${filmId}`} className="film-nav__link">Overview</Link>
         </li>
         <li className={`film-nav__item ${activeLink === FilmCardNavigationItems.Details && 'film-nav__item--active'}`}>
-          <Link to={`/films/${filmId}/#details`} className="film-nav__link">Details</Link>
+          <Link to={FilmCardNavigationItems.Details} className="film-nav__link">Details</Link>
         </li>
         <li className={`film-nav__item ${activeLink === FilmCardNavigationItems.Reviews && 'film-nav__item--active'}`}>
-          <Link to={`/films/${filmId}/#review`} className="film-nav__link">Reviews</Link>
+          <Link to={FilmCardNavigationItems.Reviews} className="film-nav__link">Reviews</Link>
         </li>
       </ul>
     </nav>

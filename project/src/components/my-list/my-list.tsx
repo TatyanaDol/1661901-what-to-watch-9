@@ -1,24 +1,21 @@
 import LogoWtw from '../logo-wtw/logo-wtw';
-import {FilmData} from '../../moks/films';
 import FilmsList from '../films-list/films-list';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchMyListFilmsAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type MyListFilmsProps = {
-  films: FilmData[];
-}
+function MyList(): JSX.Element {
 
-function MyList({films}: MyListFilmsProps): JSX.Element {
+  const dispatch = useAppDispatch();
 
-  const isInMyList = (myListFilms: FilmData[]) => {
-    const filteredList: FilmData[] = [];
-    myListFilms.map((movie) => {
-      if(movie.isFavorite) {
-        filteredList.push(movie);
-      }
-    });
-    return filteredList;
-  };
+  useEffect(() => {
+    dispatch(fetchMyListFilmsAction());
+  }, []);
+
+  const {myListFilms, isMyListFilmsDataLoaded} = useAppSelector(({DATA}) => DATA);
 
   return (
     <>
@@ -73,7 +70,8 @@ function MyList({films}: MyListFilmsProps): JSX.Element {
 
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <FilmsList films={isInMyList(films)} />
+          {!isMyListFilmsDataLoaded ? <LoadingScreen /> :
+            <FilmsList films={myListFilms} />}
         </section>
 
         <footer className="page-footer">

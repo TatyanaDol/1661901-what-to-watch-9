@@ -79,9 +79,9 @@ function AddReviewForm ({filmId}: AddReviewFormProps): JSX.Element {
       </div>
 
       <div className="add-review__text">
-        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onInput={formDataTextInputHandler}></textarea>
+        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" minLength={50} maxLength={400} onInput={formDataTextInputHandler}></textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit" >Post</button>
+          <button className="add-review__btn" type="submit">Post</button>
         </div>
       </div>
     </form>

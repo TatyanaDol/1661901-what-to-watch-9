@@ -43,3 +43,8 @@ export type NewReviewData = {
 export type FilmId = {
   filmId?: number
 }
+
+export type MyListStatusData = {
+  filmId: number
+  status: number
+}

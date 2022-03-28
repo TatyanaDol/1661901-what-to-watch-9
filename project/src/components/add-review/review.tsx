@@ -1,4 +1,4 @@
-import {ReviewData} from '../../moks/films';
+import { ReviewData } from '../../types/film';
 
 type ReviewProps = {
     review: ReviewData;
@@ -6,6 +6,7 @@ type ReviewProps = {
   }
 
 function Review({review}: ReviewProps): JSX.Element {
+
   return (
     <div className="review">
       <blockquote className="review__quote">
@@ -13,7 +14,7 @@ function Review({review}: ReviewProps): JSX.Element {
 
         <footer className="review__details">
           <cite className="review__author">{review.user.name}</cite>
-          <time className="review__date" dateTime="2016-12-24">{review.date}</time>
+          <time className="review__date" dateTime="2016-12-24">{new Date(review.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric' })}</time>
         </footer>
       </blockquote>
 

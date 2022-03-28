@@ -1,5 +1,5 @@
 
-import {ReviewData} from '../../moks/films';
+import { ReviewData } from '../../types/film';
 import Review from './review';
 
 type ReviewsListProps = {

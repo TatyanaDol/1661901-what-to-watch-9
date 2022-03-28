@@ -9,9 +9,8 @@ export enum AppRoute {
     SignIn = '/login',
     MyList = '/mylist',
     Film = '/films/:id',
-    AddReview = '/films/:id/#review',
+    AddReview = '/films/:id/review',
     Player = '/player/:id',
-    FilmDetails = '/films/:id/#details',
     NotFound = '*',
   }
 
@@ -26,6 +25,7 @@ export enum APIRoute {
     Login = '/login',
     Logout = '/logout',
     Promo = '/promo',
+    Favorite = '/favorite',
 }
 
 export enum HTTP_CODE {
@@ -43,5 +43,5 @@ export enum NameSpace {
 export enum FilmCardNavigationItems {
     Overview = '',
     Details = '#details',
-    Reviews = '#review',
+    Reviews = '#reviews',
 }

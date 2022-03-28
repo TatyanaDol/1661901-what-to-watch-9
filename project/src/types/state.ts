@@ -13,6 +13,8 @@ export type FilmsDataLoadingProcess = {
   isOpenedFilmDataLoaded: boolean,
   filmReviews: ReviewsData,
   isFilmReviewsDataLoaded: boolean,
+  myListFilms: FilmsData,
+  isMyListFilmsDataLoaded: boolean,
 };
 
 export type SiteProcess = {
@@ -22,7 +24,7 @@ export type SiteProcess = {
 };
 
 export type UserProcess = {
-  authorizationStatus: AuthorizationStatus
+  authorizationStatus: AuthorizationStatus,
 };
 
 export type State = ReturnType<typeof store.getState>;

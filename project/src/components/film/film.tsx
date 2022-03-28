@@ -1,20 +1,28 @@
 import LogoWtw from '../logo-wtw/logo-wtw';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import {UserAvatar} from '../user-avatar/user-avatar';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import { Tabs } from '../tabs/tabs';
 import { CatalogMoreLikeThis } from '../catalog-more-like-this/catalog-more-like-this';
-import { useEffect } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import { fetchOpenedFilmAction, fetchOpenedFilmReviewsAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { AuthorizationStatus } from '../../const';
+import { ButtonMyList } from '../button-my-list/button-my-list';
 
 function Film(): JSX.Element {
 
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   const params = useParams();
+
+  const navigate = useNavigate();
+
+  function handlePlayerButtonClick(evt: MouseEvent<HTMLButtonElement>) {
+    evt.preventDefault();
+    navigate(`/player/${params.id}` );
+  }
 
   const dispatch = useAppDispatch();
 
@@ -90,18 +98,13 @@ function Film(): JSX.Element {
                   </p>
 
                   <div className="film-card__buttons">
-                    <button className="btn btn--play film-card__button" type="button">
+                    <button className="btn btn--play film-card__button" type="button" onClick={handlePlayerButtonClick}>
                       <svg viewBox="0 0 19 19" width="19" height="19">
                         <use xlinkHref="#play-s"></use>
                       </svg>
                       <span>Play</span>
                     </button>
-                    <button className="btn btn--list film-card__button" type="button">
-                      <svg viewBox="0 0 19 20" width="19" height="20">
-                        <use xlinkHref="#add"></use>
-                      </svg>
-                      <span>My list</span>
-                    </button>
+                    <ButtonMyList filmIsFavorite={openedFilm?.isFavorite} filmId={openedFilm?.id} />
                     {
                       authorizationStatus === AuthorizationStatus.Auth &&
                     <Link to={`/films/${openedFilm?.id}/review`} className="btn film-card__button">Add review</Link>

@@ -7,11 +7,12 @@ function Player (): JSX.Element {
   const {allFilms} = useAppSelector(({DATA}) => DATA);
 
   const params = useParams();
-  const film = allFilms[Number(params.id)];
+  // const film = allFilms[Number(params.id)];
+  const film = allFilms.find((element) => element.id === Number(params.id));
 
   return (
     <div className="player">
-      <video src={film.videoLink} className="player__video" poster={film.posterImage} controls></video>
+      <video src={film?.videoLink} className="player__video" poster={film?.posterImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
