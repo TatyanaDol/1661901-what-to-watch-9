@@ -38,6 +38,7 @@ export type NewReviewData = {
   comment: string
   rating: number
   filmId: number
+  setIsSavingCb:  React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export type FilmId = {
@@ -47,4 +48,5 @@ export type FilmId = {
 export type MyListStatusData = {
   filmId: number
   status: number
+  isPromo: boolean
 }

@@ -1,4 +1,5 @@
-import {Link} from 'react-router-dom';
+import { MouseEvent } from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks/index';
 
@@ -6,6 +7,12 @@ import {useAppSelector} from '../../hooks/index';
 export function UserAvatar(): JSX.Element {
 
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const navigate = useNavigate();
+
+  function handleUserAvatarClick(evt: MouseEvent<HTMLImageElement>) {
+    evt.preventDefault();
+    navigate(AppRoute.MyList);
+  }
 
   if(authorizationStatus === AuthorizationStatus.Auth) {
     return (
@@ -17,6 +24,7 @@ export function UserAvatar(): JSX.Element {
               alt="User avatar"
               width="63"
               height="63"
+              onClick={handleUserAvatarClick}
             />
           </div>
         </li>

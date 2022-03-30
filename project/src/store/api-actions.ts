@@ -2,10 +2,10 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from './index';
 import {store} from './index';
 import {FilmsData, FilmData, FilmId, NewReviewData, MyListStatusData, ReviewsData} from '../types/film';
-import {APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus, AppRoute, FilmCardNavigationItems} from '../const';
+import {APIRoute, AuthorizationStatus, AppRoute, FilmCardNavigationItems} from '../const';
 import {redirectToRoute} from './action';
 import {loadFilms, loadPromoFilm, loadSimilarFilms, loadOpenedFilm, loadFilmReviews, changeMyListFilms, loadMyListFilms} from './films-data-loading-process/films-data-loading-process';
-import {filterFilmsByGenre, setError} from './site-process/site-process';
+import {filterFilmsByGenre} from './site-process/site-process';
 import { requireAuthorization} from './user-process/user-process';
 import {handleError} from '../services/handle-error';
 import {saveToken} from '../services/token';
@@ -35,16 +35,6 @@ export const fetchPromoFilmAction = createAsyncThunk(
     } catch (error) {
       handleError(error);
     }
-  },
-);
-
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError('')),
-      TIMEOUT_SHOW_ERROR,
-    );
   },
 );
 
@@ -116,12 +106,14 @@ export const fetchOpenedFilmReviewsAction = createAsyncThunk(
 
 export const addNewReviewAction = createAsyncThunk(
   'addNewReview',
-  async ({comment, rating, filmId}: NewReviewData) => {
+  async ({comment, rating, filmId, setIsSavingCb}: NewReviewData) => {
     try {
       const {data} = await api.post<ReviewsData>(`/comments/${filmId}`, {comment, rating});
       store.dispatch(loadFilmReviews(data));
       store.dispatch(redirectToRoute(`/films/${filmId}/${FilmCardNavigationItems.Reviews}`));
+      setIsSavingCb(false);
     } catch(error) {
+      setIsSavingCb(false);
       handleError(error);
     }
   },
@@ -129,11 +121,15 @@ export const addNewReviewAction = createAsyncThunk(
 
 export const changeMyListStatusAction = createAsyncThunk(
   'changeMyListStatus',
-  async ({filmId, status}: MyListStatusData) => {
+  async ({filmId, status, isPromo}: MyListStatusData) => {
     try {
       const {data} = await api.post<FilmData>(`/favorite/${filmId}/${status}`);
       store.dispatch(changeMyListFilms({data, status}));
-      store.dispatch(loadOpenedFilm(data));
+      if(isPromo){
+        store.dispatch(loadPromoFilm(data));
+      } else {
+        store.dispatch(loadOpenedFilm(data));
+      }
     } catch(error) {
       handleError(error);
     }

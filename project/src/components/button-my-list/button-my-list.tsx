@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeMyListStatusAction } from '../../store/api-actions';
 
 type ButtonMyListProps = {
@@ -8,12 +8,19 @@ type ButtonMyListProps = {
 
 export function ButtonMyList({filmIsFavorite, filmId}: ButtonMyListProps): JSX.Element {
 
+  const {promoFilm} = useAppSelector(({DATA}) => DATA);
 
   const dispatch = useAppDispatch();
 
   function changeIsFavoriteStatus(status: number) {
+    let isPromo = false;
     if(filmId) {
-      dispatch(changeMyListStatusAction({filmId, status}));
+      if(promoFilm?.id === filmId) {
+        isPromo = true;
+        dispatch(changeMyListStatusAction({filmId, status, isPromo}));
+      } else {
+        dispatch(changeMyListStatusAction({filmId, status, isPromo}));
+      }
     }
 
   }

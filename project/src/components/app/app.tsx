@@ -8,14 +8,11 @@ import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import {useAppSelector} from '../../hooks/index';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import AddReview from '../add-review/add-review';
 
 function App(): JSX.Element {
-
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -24,14 +21,14 @@ function App(): JSX.Element {
         <Route path={AppRoute.SignIn} element={<SignIn />} />
         <Route path={AppRoute.Player} element={<Player />} />
         <Route path={AppRoute.MyList} element={
-          <PrivateRoute authorizationStatus={authorizationStatus}>
+          <PrivateRoute >
             <MyList />
           </PrivateRoute>
         }
         />
         <Route path={AppRoute.Film} element={<Film />} />
         <Route path={AppRoute.AddReview} element={
-          <PrivateRoute authorizationStatus={authorizationStatus}>
+          <PrivateRoute >
             <AddReview />
           </PrivateRoute>
         }

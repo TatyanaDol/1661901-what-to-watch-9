@@ -1,8 +1,9 @@
 import AddReviewForm from './add-review-form';
 import {Link, useParams} from 'react-router-dom';
-import {useAppSelector} from '../../hooks/index';
+import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import LogoWtw from '../logo-wtw/logo-wtw';
 import {UserAvatar} from '../user-avatar/user-avatar';
+import { fetchOpenedFilmAction, fetchOpenedFilmReviewsAction } from '../../store/api-actions';
 
 
 function AddReview (): JSX.Element {
@@ -10,6 +11,13 @@ function AddReview (): JSX.Element {
   const {openedFilm} = useAppSelector(({DATA}) => DATA);
 
   const params = useParams();
+  const dispatch = useAppDispatch();
+
+  if(!openedFilm) {
+    dispatch(fetchOpenedFilmAction({filmId: Number(params.id)} ));
+    dispatch(fetchOpenedFilmReviewsAction({filmId: Number(params.id)} ));
+  }
+
 
   return (
     <>

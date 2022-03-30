@@ -20,7 +20,6 @@ export type FilmsDataLoadingProcess = {
 export type SiteProcess = {
   filteredFilms: FilmsData,
   genre: string,
-  error: string,
 };
 
 export type UserProcess = {
