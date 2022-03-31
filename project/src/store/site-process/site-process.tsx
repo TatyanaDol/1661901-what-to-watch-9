@@ -8,7 +8,6 @@ import { FilmData } from '../../types/film';
 const initialState: SiteProcess = {
   filteredFilms: [],
   genre: FILTER_ALL_GENRES,
-  error: '',
 };
 
 export const siteProcess = createSlice({
@@ -29,10 +28,7 @@ export const siteProcess = createSlice({
       state.genre = action.payload;
 
     },
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
   },
 });
 
-export const {filterFilmsByGenre, changeGenre, setError} = siteProcess.actions;
+export const {filterFilmsByGenre, changeGenre} = siteProcess.actions;

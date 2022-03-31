@@ -1,4 +1,5 @@
 import { FilmData } from '../../types/film';
+import { createMovieLevel } from '../../utils/utils';
 
 type MoviePageOverviewProps = {
     film: FilmData;
@@ -10,7 +11,7 @@ export function MoviePageOverview({film}: MoviePageOverviewProps): JSX.Element {
       <div className="film-rating">
         <div className="film-rating__score">{film.rating}</div>
         <p className="film-rating__meta">
-          <span className="film-rating__level">good</span>
+          <span className="film-rating__level">{createMovieLevel(film.rating)}</span>
           <span className="film-rating__count">{film.scoresCount} ratings</span>
         </p>
       </div>

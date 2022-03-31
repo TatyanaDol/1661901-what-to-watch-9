@@ -1,8 +1,8 @@
-export const TIMEOUT_SHOW_ERROR = 2000;
-
 export const FILTER_ALL_GENRES = 'All genres';
 
 export const FILM_COUNT_PER_STEP = 8;
+
+export const STARS_COUNT = 10;
 
 export enum AppRoute {
     Main = '/',

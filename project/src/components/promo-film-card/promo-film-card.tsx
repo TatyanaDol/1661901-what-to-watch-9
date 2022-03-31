@@ -4,6 +4,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import LogoWtw from '../logo-wtw/logo-wtw';
 import { useNavigate } from 'react-router-dom';
 import { MouseEvent } from 'react';
+import { ButtonMyList } from '../button-my-list/button-my-list';
 
 
 export function PromoFilmCard(): JSX.Element {
@@ -66,15 +67,7 @@ export function PromoFilmCard(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <ButtonMyList filmIsFavorite={promoFilm?.isFavorite} filmId={promoFilm?.id} />
               </div>
             </div>
           </div>

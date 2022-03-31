@@ -1,37 +1,92 @@
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import {useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/index';
-
+import browserHistory from '../../browser-history';
 
 function Player (): JSX.Element {
+
+  const [playing, setPlaying] = useState(false);
+
+  const [videoFullTime, setVideoTime] = useState(0);
+
+  const [videoCurrentTime, setVideoCurrentTime] = useState(0);
+
+  const [videoProgress, setVideoProgress] = useState(0);
 
   const {allFilms} = useAppSelector(({DATA}) => DATA);
 
   const params = useParams();
-  // const film = allFilms[Number(params.id)];
   const film = allFilms.find((element) => element.id === Number(params.id));
+
+  const videoPlayerRef = useRef() as MutableRefObject<HTMLVideoElement>;
+
+  function handleVideoPlayPauseClick(control: string) {
+    if (control === 'play') {
+      videoPlayerRef.current.play();
+      setPlaying(true);
+    } else if (control === 'pause') {
+      videoPlayerRef.current.pause();
+      setPlaying(false);
+    }
+  }
+
+  if(videoPlayerRef.current) {
+    videoPlayerRef.current.ontimeupdate = (evt) => {
+      setVideoCurrentTime(videoPlayerRef.current?.currentTime);
+      setVideoProgress((videoPlayerRef.current?.currentTime / videoFullTime) * 100);
+    };
+  }
+
+  useEffect(() => {
+
+    setVideoTime(videoPlayerRef.current.duration);
+
+  }, [playing]);
+
+  function getVideoTimeLeft(fullTime: number, currentTime: number) {
+
+    const timeLeft = fullTime - currentTime;
+
+    return `${Math.floor(timeLeft / 60)  }:${  (`0${  Math.floor(timeLeft % 60)}`).slice(-2)}`;
+
+  }
+
+  function exitPlayer() {
+    browserHistory.back();
+  }
 
   return (
     <div className="player">
-      <video src={film?.videoLink} className="player__video" poster={film?.posterImage}></video>
+      <video ref={videoPlayerRef} src={film?.videoLink} id="video" className="player__video" poster={film?.posterImage}></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button type="button" className="player__exit" onClick={exitPlayer}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{left: '0%'}}>Toggler</div>
+            <progress className="player__progress" value={videoProgress} max="100"></progress>
+            <div className="player__toggler" style={{left: `${videoProgress}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">0:00:00</div>
+          <div className="player__time-value"> {videoFullTime && videoCurrentTime ? getVideoTimeLeft(videoFullTime, videoCurrentTime) : '0:00:00'}</div>
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
-          </button>
+          {playing ? (
+            <button type="button" className="player__play" onClick={() => handleVideoPlayPauseClick('pause')}>
+              <svg viewBox="0 0 14 21" width="14" height="21">
+                <use xlinkHref="#pause"></use>
+              </svg>
+              <span>Pause</span>
+            </button>
+          ) : (
+            <button type="button" className="player__play" onClick={() => handleVideoPlayPauseClick('play')}>
+              <svg viewBox="0 0 19 19" width="19" height="19">
+                <use xlinkHref="#play-s"></use>
+              </svg>
+              <span>Play</span>
+            </button>
+          )}
+
           <div className="player__name">Transpotting</div>
 
           <button type="button" className="player__full-screen">
