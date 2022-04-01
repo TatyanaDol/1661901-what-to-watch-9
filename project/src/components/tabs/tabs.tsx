@@ -6,7 +6,6 @@ import {useLocation } from 'react-router';
 import {useEffect} from 'react';
 import { FilmCardNavigationItems } from '../../const';
 import { MoviePageDetails } from '../movie-page-details/movie-page-details';
-// import AddReview from '../add-review/add-review';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 
 type TabsProps = {
