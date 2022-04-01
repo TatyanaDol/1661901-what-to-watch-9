@@ -8,7 +8,7 @@ import {loadFilms, loadPromoFilm, loadSimilarFilms, loadOpenedFilm, loadFilmRevi
 import {filterFilmsByGenre} from './site-process/site-process';
 import { requireAuthorization} from './user-process/user-process';
 import {handleError} from '../services/handle-error';
-import {saveToken} from '../services/token';
+import {dropToken, saveToken} from '../services/token';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 
@@ -62,6 +62,19 @@ export const loginAction = createAsyncThunk(
     } catch(error) {
       handleError(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const logoutAction = createAsyncThunk(
+  'logout',
+  async () => {
+    try {
+      await api.delete(APIRoute.Logout);
+      dropToken();
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    } catch (error) {
+      handleError(error);
     }
   },
 );

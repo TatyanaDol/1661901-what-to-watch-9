@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { fetchMyListFilmsAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { UserAvatar } from '../user-avatar/user-avatar';
 
 function MyList(): JSX.Element {
 
@@ -56,16 +57,7 @@ function MyList(): JSX.Element {
 
           <h1 className="page-title user-page__title">My list</h1>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
-            </li>
-          </ul>
+          <UserAvatar />
         </header>
 
         <section className="catalog">

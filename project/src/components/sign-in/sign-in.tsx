@@ -1,10 +1,13 @@
 import LogoWtw from '../logo-wtw/logo-wtw';
-import {useRef, FormEvent} from 'react';
+import {useRef, FormEvent, useState} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 
 function SignIn(): JSX.Element {
+
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -19,6 +22,21 @@ function SignIn(): JSX.Element {
     evt.preventDefault();
 
     if (emailRef.current !== null && passwordRef.current !== null) {
+
+      const regexPassword = /\S*(\S*([a-zA-Z]\S*[0-9])|([0-9]\S*[a-zA-Z]))\S*/;
+      const regexEmail =/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if(!regexEmail.test(emailRef.current.value)) {
+        setIsEmailValid(false);
+        return;
+      }
+      setIsEmailValid(true);
+
+      if(!regexPassword.test(passwordRef.current.value)) {
+        setIsPasswordValid(false);
+        return;
+      }
+      setIsPasswordValid(true);
       onSubmit({
         email: emailRef.current.value,
         password: passwordRef.current.value,
@@ -68,13 +86,21 @@ function SignIn(): JSX.Element {
 
         <div className="sign-in user-page__content">
           <form action="#" className="sign-in__form" onSubmit={handleSubmit}>
+            {!isPasswordValid &&
+            <div className="sign-in__message">
+              <p>Please enter a valid password. <br /> The password must contain at least one number and one letter. </p>
+            </div>}
+            {!isEmailValid &&
+            <div className="sign-in__message">
+              <p>Please enter a valid email address </p>
+            </div>}
             <div className="sign-in__fields">
-              <div className="sign-in__field">
-                <input ref={emailRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
+              <div className={`sign-in__field ${!isEmailValid && 'sign-in__field--error'}`}>
+                <input ref={emailRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" required/>
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
-              <div className="sign-in__field">
-                <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
+              <div className={`sign-in__field ${!isPasswordValid && 'sign-in__field--error'}`}>
+                <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" required/>
                 <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
               </div>
             </div>
@@ -83,7 +109,6 @@ function SignIn(): JSX.Element {
             </div>
           </form>
         </div>
-
         <footer className="page-footer">
           <div className="logo">
             <LogoWtw isLight />

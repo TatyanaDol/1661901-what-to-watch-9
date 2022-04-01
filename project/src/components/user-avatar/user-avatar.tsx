@@ -1,17 +1,24 @@
 import { MouseEvent } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {useAppSelector} from '../../hooks/index';
+import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import { logoutAction } from '../../store/api-actions';
 
 
 export function UserAvatar(): JSX.Element {
 
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   function handleUserAvatarClick(evt: MouseEvent<HTMLImageElement>) {
     evt.preventDefault();
     navigate(AppRoute.MyList);
+  }
+
+  function handleLogout(evt: MouseEvent<HTMLLIElement>) {
+    evt.preventDefault();
+    dispatch(logoutAction());
   }
 
   if(authorizationStatus === AuthorizationStatus.Auth) {
@@ -28,7 +35,7 @@ export function UserAvatar(): JSX.Element {
             />
           </div>
         </li>
-        <li className="user-block__item">
+        <li className="user-block__item" onClick={handleLogout}>
           <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
         </li>
       </ul>

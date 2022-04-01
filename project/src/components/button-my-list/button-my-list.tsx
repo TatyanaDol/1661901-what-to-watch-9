@@ -13,17 +13,12 @@ export function ButtonMyList({filmIsFavorite, filmId}: ButtonMyListProps): JSX.E
   const dispatch = useAppDispatch();
 
   function changeIsFavoriteStatus(status: number) {
-    let isPromo = false;
     if(filmId) {
-      if(promoFilm?.id === filmId) {
-        isPromo = true;
-        dispatch(changeMyListStatusAction({filmId, status, isPromo}));
-      } else {
-        dispatch(changeMyListStatusAction({filmId, status, isPromo}));
-      }
+      const isPromo = promoFilm?.id === filmId;
+      dispatch(changeMyListStatusAction({filmId, status, isPromo}));
     }
-
   }
+
   return  !filmIsFavorite ?
     <button className="btn btn--list film-card__button" type="button" onClick={() => changeIsFavoriteStatus(1)}>
       <svg viewBox="0 0 19 20" width="19" height="20">
