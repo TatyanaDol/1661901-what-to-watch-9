@@ -1,4 +1,5 @@
-import {Link} from 'react-router-dom';
+import { MouseEvent } from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import { FilmData } from '../../types/film';
 import PreviewVideoPlayer from '../preview-video-player/preview-video-player';
 
@@ -11,6 +12,12 @@ type SmallMovieCardProps = {
 }
 
 function MovieCard({onMouseOverCb, movie, activeMovie, onMouseOutCb}: SmallMovieCardProps): JSX.Element {
+  const navigate = useNavigate();
+
+  function handleSmallFilmCardClick(evt: MouseEvent<HTMLImageElement>) {
+    evt.preventDefault();
+    navigate(`/films/${movie.id}`);
+  }
 
   return (
     <article className="small-film-card catalog__films-card" onMouseOver={(evt) => {
@@ -20,7 +27,7 @@ function MovieCard({onMouseOverCb, movie, activeMovie, onMouseOutCb}: SmallMovie
       onMouseOutCb();
     }}
     >
-      <div className="small-film-card__image">
+      <div className="small-film-card__image" onClick={handleSmallFilmCardClick}>
         {activeMovie === movie.id ? <PreviewVideoPlayer  filmSrc={movie.previewVideoLink} posterImage={movie.posterImage} play={activeMovie === movie.id}/>
           :
           <img

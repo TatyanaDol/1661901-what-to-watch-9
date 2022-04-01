@@ -5,9 +5,9 @@ import browserHistory from '../../browser-history';
 
 function Player (): JSX.Element {
 
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
 
-  const [videoFullTime, setVideoTime] = useState(0);
+  const [videoFullTime, setVideoFullTime] = useState(0);
 
   const [videoCurrentTime, setVideoCurrentTime] = useState(0);
 
@@ -32,27 +32,42 @@ function Player (): JSX.Element {
 
   if(videoPlayerRef.current) {
     videoPlayerRef.current.ontimeupdate = (evt) => {
+      setVideoFullTime(videoPlayerRef.current.duration);
       setVideoCurrentTime(videoPlayerRef.current?.currentTime);
       setVideoProgress((videoPlayerRef.current?.currentTime / videoFullTime) * 100);
     };
   }
 
   useEffect(() => {
+    setVideoFullTime(videoPlayerRef.current.duration);
+    videoPlayerRef.current.play();
 
-    setVideoTime(videoPlayerRef.current.duration);
+  }, []);
 
-  }, [playing]);
 
   function getVideoTimeLeft(fullTime: number, currentTime: number) {
 
     const timeLeft = fullTime - currentTime;
+    const hoursLeft = Math.trunc(timeLeft / 3600);
+    const minutesLeft = timeLeft - hoursLeft * 3600;
 
-    return `${Math.floor(timeLeft / 60)  }:${  (`0${  Math.floor(timeLeft % 60)}`).slice(-2)}`;
-
+    if (hoursLeft) {
+      return  `-${(`0${hoursLeft}`).slice(-2)}:${(`0${Math.floor(minutesLeft / 60)}`).slice(-2)}:${(`0${  Math.floor(timeLeft % 60)}`).slice(-2)}`;
+    }
+    return  `-${(`0${Math.floor(minutesLeft / 60)}`).slice(-2)}:${(`0${  Math.floor(timeLeft % 60)}`).slice(-2)}`;
   }
 
   function exitPlayer() {
     browserHistory.back();
+  }
+
+  function toggleFullScreen() {
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      videoPlayerRef.current.requestFullscreen();
+    }
   }
 
   return (
@@ -67,7 +82,7 @@ function Player (): JSX.Element {
             <progress className="player__progress" value={videoProgress} max="100"></progress>
             <div className="player__toggler" style={{left: `${videoProgress}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value"> {videoFullTime && videoCurrentTime ? getVideoTimeLeft(videoFullTime, videoCurrentTime) : '0:00:00'}</div>
+          <div className="player__time-value"> {(videoFullTime && videoCurrentTime) ? getVideoTimeLeft(videoFullTime, videoCurrentTime) : '0:00:00'}</div>
         </div>
 
         <div className="player__controls-row">
@@ -89,7 +104,7 @@ function Player (): JSX.Element {
 
           <div className="player__name">Transpotting</div>
 
-          <button type="button" className="player__full-screen">
+          <button type="button" className="player__full-screen" onClick={toggleFullScreen}>
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>
