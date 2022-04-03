@@ -32,15 +32,22 @@ function Player (): JSX.Element {
 
   if(videoPlayerRef.current) {
     videoPlayerRef.current.ontimeupdate = (evt) => {
-      setVideoFullTime(videoPlayerRef.current.duration);
+
+      const dur = videoPlayerRef.current ? videoPlayerRef.current.duration : 0;
+
+      setVideoFullTime(dur);
       setVideoCurrentTime(videoPlayerRef.current?.currentTime);
-      setVideoProgress((videoPlayerRef.current?.currentTime / videoFullTime) * 100);
+      setVideoProgress(((videoPlayerRef.current?.currentTime) / videoFullTime) * 100);
     };
   }
 
   useEffect(() => {
+
     setVideoFullTime(videoPlayerRef.current.duration);
     videoPlayerRef.current.play();
+    return () => {
+      setVideoFullTime(0);
+    };
 
   }, []);
 
@@ -79,7 +86,7 @@ function Player (): JSX.Element {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value={videoProgress} max="100"></progress>
+            <progress className="player__progress" value={videoProgress || 0} max="100"></progress>
             <div className="player__toggler" style={{left: `${videoProgress}%`}}>Toggler</div>
           </div>
           <div className="player__time-value"> {(videoFullTime && videoCurrentTime) ? getVideoTimeLeft(videoFullTime, videoCurrentTime) : '0:00:00'}</div>

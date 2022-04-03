@@ -13,7 +13,7 @@ export function ButtonMyList({filmIsFavorite, filmId}: ButtonMyListProps): JSX.E
   const dispatch = useAppDispatch();
 
   function changeIsFavoriteStatus(status: number) {
-    if(filmId) {
+    if(filmId !== undefined) {
       const isPromo = promoFilm?.id === filmId;
       dispatch(changeMyListStatusAction({filmId, status, isPromo}));
     }

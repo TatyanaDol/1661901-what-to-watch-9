@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { FilmData } from '../../types/film';
 import { createMovieDuration } from '../../utils/utils';
 
@@ -18,7 +19,7 @@ export function MoviePageDetails({film}: MoviePageDetailsProps): JSX.Element {
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
             {
-              film.starring.map((element) => (<>{element}, <br /></>))
+              film.starring.map((element) => (<Fragment key={element}>{element}, <br /></Fragment>))
             }
           </span>
         </p>
