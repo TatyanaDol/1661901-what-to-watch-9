@@ -36,11 +36,15 @@ function FilmsList({films}: FilmsListProps): JSX.Element {
 
   useEffect(() => {
     setfilmsForRender(films.slice(0, renderedFilmsCount));
-
+    return () => {
+      setfilmsForRender([]);
+    };
   }, [renderedFilmsCount, films]);
 
   useEffect(() => {
     setRenderedFilmsCount(FILM_COUNT_PER_STEP);
+    return () => {setRenderedFilmsCount(0);
+    };
   }, [genre]);
 
   function handleShowMoreButtonClick() {

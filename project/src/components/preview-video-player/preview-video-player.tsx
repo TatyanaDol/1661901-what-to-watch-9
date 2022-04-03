@@ -13,23 +13,25 @@ function PreviewVideoPlayer ({filmSrc, posterImage, play}: PreviewVideoPlayerPro
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-
-    if (videoRef.current === null) {
+    const video = videoRef.current;
+    if (video === null) {
       return;
     }
-
-    if (play) {
-      videoRef.current.play();
-      return;
+    const playPromise = video.play();
+    if (playPromise !== undefined && playPromise !== null) {
+      playPromise
+        .then(() => {
+          if (!play) {
+            video.load();
+          }
+        });
     }
-
-    videoRef.current.pause();
-  }, [filmSrc]);
+  }, [filmSrc, play]);
 
   return (
 
     <video src={filmSrc} poster={posterImage} ref={videoRef} width="280"
-      height="175" muted
+      height="175" muted preload='none'
     >
     </video>
 

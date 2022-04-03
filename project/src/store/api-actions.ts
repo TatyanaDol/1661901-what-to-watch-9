@@ -140,6 +140,7 @@ export const changeMyListStatusAction = createAsyncThunk(
       store.dispatch(changeMyListFilms({data, status}));
       if(isPromo){
         store.dispatch(loadPromoFilm(data));
+        store.dispatch(loadOpenedFilm(data));
       } else {
         store.dispatch(loadOpenedFilm(data));
       }

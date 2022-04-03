@@ -1,4 +1,4 @@
-import React, {FormEvent, MutableRefObject, useRef, useState} from 'react';
+import React, {FormEvent, MutableRefObject, useEffect, useRef, useState} from 'react';
 import { STARS_COUNT } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { addNewReviewAction } from '../../store/api-actions';
@@ -8,7 +8,9 @@ type AddReviewFormProps = {
   filmId: number,
 }
 
-function AddReviewForm ({filmId}: AddReviewFormProps): JSX.Element {
+function AddReviewForm ({filmId}: AddReviewFormProps): JSX.Element | null {
+
+  const [didMount, setDidMount] = useState(false);
 
   const textareaRef = useRef() as MutableRefObject<HTMLTextAreaElement>;
 
@@ -48,6 +50,15 @@ function AddReviewForm ({filmId}: AddReviewFormProps): JSX.Element {
     });
 
   };
+
+  useEffect(() => {
+    setDidMount(true);
+    return () => setDidMount(false);
+  }, []);
+
+  if(!didMount) {
+    return null;
+  }
 
   return (
     <form action="#" className="add-review__form" onSubmit={handleSubmit}>
