@@ -6,7 +6,7 @@ import {APIRoute, AuthorizationStatus, AppRoute, FilmCardNavigationItems} from '
 import {redirectToRoute} from './action';
 import {loadFilms, loadPromoFilm, loadSimilarFilms, loadOpenedFilm, loadFilmReviews, changeMyListFilms, loadMyListFilms} from './films-data-loading-process/films-data-loading-process';
 import {filterFilmsByGenre} from './site-process/site-process';
-import { requireAuthorization} from './user-process/user-process';
+import { loadUserAvatarUrl, requireAuthorization} from './user-process/user-process';
 import {handleError} from '../services/handle-error';
 import {dropToken, saveToken} from '../services/token';
 import {AuthData} from '../types/auth-data';
@@ -42,10 +42,24 @@ export const checkAuthAction = createAsyncThunk(
   'checkAuth',
   async () => {
     try {
-      await api.get(APIRoute.Login);
+      const {data: {avatarUrl}} = await api.get(APIRoute.Login);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(loadUserAvatarUrl(avatarUrl));
     } catch(error) {
       handleError(error);
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const checkLoginOrLogoutAction = createAsyncThunk(
+  'checkLoginOrLogout',
+  async () => {
+    try {
+      const {data: {avatarUrl}} = await api.get(APIRoute.Login);
+      store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(loadUserAvatarUrl(avatarUrl));
+    } catch(error) {
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
@@ -55,9 +69,10 @@ export const loginAction = createAsyncThunk(
   'login',
   async ({email, password}: AuthData) => {
     try {
-      const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+      const {data: {token, avatarUrl}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(loadUserAvatarUrl(avatarUrl));
       store.dispatch(redirectToRoute(AppRoute.Main));
     } catch(error) {
       handleError(error);

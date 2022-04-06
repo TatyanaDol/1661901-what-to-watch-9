@@ -4,6 +4,13 @@ export const FILM_COUNT_PER_STEP = 8;
 
 export const STARS_COUNT = 10;
 
+export const MINIMUM_REVIEW_LENGTH = 50;
+export const MAXIMUM_REVIEW_LENGTH = 400;
+
+export const INDEX_FOR_MAXIMUM_GENRES_COUNT = 10;
+
+export const MAXIMUM_SIMILAR_FILMS_COUNT = 4;
+
 export enum AppRoute {
     Main = '/',
     SignIn = '/login',
@@ -28,16 +35,16 @@ export enum APIRoute {
     Favorite = '/favorite',
 }
 
-export enum HTTP_CODE {
-    BAD_REQUEST = 400,
-    UNAUTHORIZED = 401,
-    NOT_FOUND = 404,
+export enum HttpCode {
+    Bad_request = 400,
+    Unauthorized = 401,
+    Not_found = 404,
 }
 
 export enum NameSpace {
-    data = 'DATA',
-    site = 'SITE',
-    user = 'USER',
+    Data = 'DATA',
+    Site = 'SITE',
+    User = 'USER',
   }
 
 export enum FilmCardNavigationItems {

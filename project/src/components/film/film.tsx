@@ -10,10 +10,14 @@ import { fetchOpenedFilmAction, fetchOpenedFilmReviewsAction } from '../../store
 import LoadingScreen from '../loading-screen/loading-screen';
 import { AuthorizationStatus } from '../../const';
 import { ButtonMyList } from '../button-my-list/button-my-list';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getOpenedFilm, getOpenedFilmDataLoadedStatus } from '../../store/films-data-loading-process/selectors';
 
 function Film(): JSX.Element {
 
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const openedFilm = useAppSelector(getOpenedFilm);
+  const isOpenedFilmDataLoaded = useAppSelector(getOpenedFilmDataLoadedStatus);
 
   const params = useParams();
 
@@ -32,9 +36,6 @@ function Film(): JSX.Element {
     dispatch(fetchOpenedFilmReviewsAction({filmId: Number(params.id)} ));
 
   },[params.id]);
-
-  const {openedFilm, isOpenedFilmDataLoaded} = useAppSelector(({DATA}) => DATA);
-
 
   return (
     <>

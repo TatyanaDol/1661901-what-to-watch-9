@@ -3,11 +3,14 @@ import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus, getAvatarUrl } from '../../store/user-process/selectors';
 
 
 export function UserAvatar(): JSX.Element {
 
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const avatarUrl = useAppSelector(getAvatarUrl);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -27,7 +30,7 @@ export function UserAvatar(): JSX.Element {
         <li className="user-block__item">
           <div className="user-block__avatar">
             <img
-              src="img/avatar.jpg"
+              src={avatarUrl}
               alt="User avatar"
               width="63"
               height="63"

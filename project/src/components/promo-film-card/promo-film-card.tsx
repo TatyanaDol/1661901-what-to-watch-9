@@ -5,11 +5,13 @@ import LogoWtw from '../logo-wtw/logo-wtw';
 import { useNavigate } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { ButtonMyList } from '../button-my-list/button-my-list';
+import { getPromoDataLoadedStatus, getPromoFilm } from '../../store/films-data-loading-process/selectors';
 
 
 export function PromoFilmCard(): JSX.Element {
 
-  const {promoFilm, isPromoDataLoaded} = useAppSelector(({DATA}) => DATA);
+  const promoFilm = useAppSelector(getPromoFilm);
+  const isPromoDataLoaded = useAppSelector(getPromoDataLoadedStatus);
 
   const navigate = useNavigate();
 

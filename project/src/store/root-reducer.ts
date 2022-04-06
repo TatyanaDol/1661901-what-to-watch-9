@@ -5,7 +5,7 @@ import {siteProcess} from './site-process/site-process';
 import {userProcess} from './user-process/user-process';
 
 export const rootReducer = combineReducers({
-  [NameSpace.data]: filmsDataLoadingProcess.reducer,
-  [NameSpace.site]: siteProcess.reducer,
-  [NameSpace.user]: userProcess.reducer,
+  [NameSpace.Data]: filmsDataLoadingProcess.reducer,
+  [NameSpace.Site]: siteProcess.reducer,
+  [NameSpace.User]: userProcess.reducer,
 });

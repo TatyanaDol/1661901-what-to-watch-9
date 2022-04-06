@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeMyListStatusAction } from '../../store/api-actions';
+import { getPromoFilm } from '../../store/films-data-loading-process/selectors';
 
 type ButtonMyListProps = {
     filmIsFavorite: boolean | undefined,
@@ -8,7 +9,7 @@ type ButtonMyListProps = {
 
 export function ButtonMyList({filmIsFavorite, filmId}: ButtonMyListProps): JSX.Element {
 
-  const {promoFilm} = useAppSelector(({DATA}) => DATA);
+  const promoFilm = useAppSelector(getPromoFilm);
 
   const dispatch = useAppDispatch();
 

@@ -19,7 +19,7 @@ const initialState: FilmsDataLoadingProcess = {
 };
 
 export const filmsDataLoadingProcess = createSlice({
-  name: NameSpace.data,
+  name: NameSpace.Data,
   initialState,
   reducers: {
     loadFilms: (state, action) => {

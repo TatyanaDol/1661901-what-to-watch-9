@@ -1,5 +1,5 @@
 import React, {FormEvent, MutableRefObject, useEffect, useRef, useState} from 'react';
-import { STARS_COUNT } from '../../const';
+import { MAXIMUM_REVIEW_LENGTH, MINIMUM_REVIEW_LENGTH, STARS_COUNT } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { addNewReviewAction } from '../../store/api-actions';
 import { NewReviewData } from '../../types/film';
@@ -21,13 +21,12 @@ function AddReviewForm ({filmId}: AddReviewFormProps): JSX.Element | null {
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const formDataChangeHandler = (evt: React.FormEvent<HTMLDivElement>) => {
-    evt.preventDefault();
+  const handleFormDataChange = (evt: React.FormEvent<HTMLDivElement>) => {
     const {name, value} = evt.target as HTMLInputElement;
     setReviewFormData({...reviewFormData, [name]: value});
   };
 
-  const formDataTextInputHandler = (evt: React.FormEvent<HTMLTextAreaElement>) => {
+  const handleFormDataTextInput = (evt: React.FormEvent<HTMLTextAreaElement>) => {
     evt.preventDefault();
     const {name, value} = evt.target as HTMLTextAreaElement;
     setReviewFormData({...reviewFormData, [name]: value});
@@ -63,17 +62,17 @@ function AddReviewForm ({filmId}: AddReviewFormProps): JSX.Element | null {
   return (
     <form action="#" className="add-review__form" onSubmit={handleSubmit}>
       <div className="rating">
-        <div className="rating__stars" onChange={formDataChangeHandler}>
+        <div className="rating__stars" >
           {Array.from({ length: STARS_COUNT }, (v, k) => k).map((_, ind) => (
             <React.Fragment key={_}>
-              <input  className="rating__input" id={`star-${ind}`} type="radio" name="rating" value={ind} disabled={isSaving}/>
-              <label className="rating__label" htmlFor={`star-${ind}`}>Rating {ind}</label>
+              <input  className="rating__input" id={`star-${-ind + STARS_COUNT}`} type="radio" name="rating" value={-ind + STARS_COUNT} disabled={isSaving} onChange={handleFormDataChange}/>
+              <label className="rating__label" htmlFor={`star-${-ind + STARS_COUNT}`}>Rating {-ind + STARS_COUNT}</label>
             </React.Fragment>))}
         </div>
       </div>
 
       <div className="add-review__text">
-        <textarea ref={textareaRef} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" minLength={50} maxLength={400} onInput={formDataTextInputHandler}></textarea>
+        <textarea ref={textareaRef} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" minLength={MINIMUM_REVIEW_LENGTH} maxLength={MAXIMUM_REVIEW_LENGTH} onInput={handleFormDataTextInput}></textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit" disabled={reviewFormData.rating === 0 || (textareaRef.current?.textLength < 50) || isSaving}>Post</button>
         </div>

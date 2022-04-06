@@ -3,11 +3,14 @@ import {useAppSelector} from '../../hooks/index';
 import {FilmCardNavigation} from '../film-card-navigation/film-card-navigation';
 import { FilmCardNavigationItems } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
-import ReviewsList from '../add-review/reviews-list';
+import ReviewsList from '../reviews-list/reviews-list';
+import { getFilmReviews, getFilmReviewsDataLoadedStatus, getOpenedFilm } from '../../store/films-data-loading-process/selectors';
 
 function MoviePageReviews (): JSX.Element {
 
-  const {filmReviews, isFilmReviewsDataLoaded, openedFilm} = useAppSelector(({DATA}) => DATA);
+  const filmReviews = useAppSelector(getFilmReviews);
+  const openedFilm = useAppSelector(getOpenedFilm);
+  const isFilmReviewsDataLoaded = useAppSelector(getFilmReviewsDataLoadedStatus);
 
   const params = useParams();
 
