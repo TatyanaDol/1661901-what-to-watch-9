@@ -34,7 +34,7 @@ export const fetchPromoFilmAction = createAsyncThunk(
       const {data} = await api.get<FilmData>(APIRoute.Promo);
       store.dispatch(loadPromoFilm(data));
     } catch (error) {
-      store.dispatch(loadPromoFilm([]));
+      store.dispatch(loadPromoFilm(null));
       handleError(error);
     }
   },
@@ -117,7 +117,7 @@ export const fetchOpenedFilmAction = createAsyncThunk(
       store.dispatch(loadOpenedFilm(data));
     } catch (error) {
       handleError(error);
-      store.dispatch(loadOpenedFilm([]));
+      store.dispatch(loadOpenedFilm(null));
       store.dispatch(redirectToRoute(AppRoute.NotFound));
     }
   },
