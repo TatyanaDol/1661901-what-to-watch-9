@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { fetchMyListFilmsAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { UserAvatar } from '../user-avatar/user-avatar';
+import { getMyListFilms, getMyListFilmsDataLoadedStatus } from '../../store/films-data-loading-process/selectors';
 
 function MyList(): JSX.Element {
 
@@ -16,7 +17,8 @@ function MyList(): JSX.Element {
     dispatch(fetchMyListFilmsAction());
   }, []);
 
-  const {myListFilms, isMyListFilmsDataLoaded} = useAppSelector(({DATA}) => DATA);
+  const myListFilms = useAppSelector(getMyListFilms);
+  const isMyListFilmsDataLoaded = useAppSelector(getMyListFilmsDataLoadedStatus);
 
   return (
     <>

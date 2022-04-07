@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { FILM_COUNT_PER_STEP } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getGenre } from '../../store/site-process/selectors';
 import { FilmData } from '../../types/film';
 import MovieCard from '../movie-card/movie-card';
 import { ShowMoreButton } from '../show-more-button/show-more-button';
@@ -11,7 +12,7 @@ type FilmsListProps = {
 
 function FilmsList({films}: FilmsListProps): JSX.Element {
 
-  const {genre} = useAppSelector(({SITE}) => SITE);
+  const genre = useAppSelector(getGenre);
 
   const [activeMovie, setActiveMovie] = useState(-1);
 

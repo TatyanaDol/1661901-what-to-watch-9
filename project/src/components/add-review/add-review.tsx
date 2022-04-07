@@ -1,14 +1,15 @@
-import AddReviewForm from './add-review-form';
+import AddReviewForm from '../add-review-form/add-review-form';
 import {Link, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import LogoWtw from '../logo-wtw/logo-wtw';
 import {UserAvatar} from '../user-avatar/user-avatar';
 import { fetchOpenedFilmAction, fetchOpenedFilmReviewsAction } from '../../store/api-actions';
+import { getOpenedFilm } from '../../store/films-data-loading-process/selectors';
 
 
 function AddReview (): JSX.Element {
 
-  const {openedFilm} = useAppSelector(({DATA}) => DATA);
+  const openedFilm = useAppSelector(getOpenedFilm);
 
   const params = useParams();
   const dispatch = useAppDispatch();

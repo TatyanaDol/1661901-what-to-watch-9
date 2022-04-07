@@ -11,7 +11,7 @@ const initialState: SiteProcess = {
 };
 
 export const siteProcess = createSlice({
-  name: NameSpace.site,
+  name: NameSpace.Site,
   initialState,
   reducers: {
     filterFilmsByGenre: (state, action) => {

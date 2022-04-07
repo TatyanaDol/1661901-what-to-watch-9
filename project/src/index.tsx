@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import App from './components/app/app';
 import {store} from './store/index';
-import {fetchFilmsAction, fetchPromoFilmAction} from './store/api-actions';
+import {checkLoginOrLogoutAction, fetchFilmsAction, fetchPromoFilmAction} from './store/api-actions';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(fetchFilmsAction());
+store.dispatch(checkLoginOrLogoutAction());
 store.dispatch(fetchPromoFilmAction());
 
 ReactDOM.render(

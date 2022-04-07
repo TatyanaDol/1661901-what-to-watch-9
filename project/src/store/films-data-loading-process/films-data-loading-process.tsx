@@ -19,7 +19,7 @@ const initialState: FilmsDataLoadingProcess = {
 };
 
 export const filmsDataLoadingProcess = createSlice({
-  name: NameSpace.data,
+  name: NameSpace.Data,
   initialState,
   reducers: {
     loadFilms: (state, action) => {
@@ -49,7 +49,7 @@ export const filmsDataLoadingProcess = createSlice({
     changeMyListFilms: (state, action) => {
       const {data, status} = action.payload;
       if(status) {
-        state.myListFilms = [...state.myListFilms, action.payload];
+        state.myListFilms = [...state.myListFilms, data];
       }
       else {
         const index = state.myListFilms.findIndex((element) => element.id === data.id);

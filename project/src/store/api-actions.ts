@@ -6,7 +6,7 @@ import {APIRoute, AuthorizationStatus, AppRoute, FilmCardNavigationItems} from '
 import {redirectToRoute} from './action';
 import {loadFilms, loadPromoFilm, loadSimilarFilms, loadOpenedFilm, loadFilmReviews, changeMyListFilms, loadMyListFilms} from './films-data-loading-process/films-data-loading-process';
 import {filterFilmsByGenre} from './site-process/site-process';
-import { requireAuthorization} from './user-process/user-process';
+import { loadUserAvatarUrl, requireAuthorization} from './user-process/user-process';
 import {handleError} from '../services/handle-error';
 import {dropToken, saveToken} from '../services/token';
 import {AuthData} from '../types/auth-data';
@@ -21,6 +21,7 @@ export const fetchFilmsAction = createAsyncThunk(
       store.dispatch(loadFilms(data));
       store.dispatch(filterFilmsByGenre(data));
     } catch (error) {
+      store.dispatch(loadFilms([]));
       handleError(error);
     }
   },
@@ -33,6 +34,7 @@ export const fetchPromoFilmAction = createAsyncThunk(
       const {data} = await api.get<FilmData>(APIRoute.Promo);
       store.dispatch(loadPromoFilm(data));
     } catch (error) {
+      store.dispatch(loadPromoFilm(null));
       handleError(error);
     }
   },
@@ -42,10 +44,24 @@ export const checkAuthAction = createAsyncThunk(
   'checkAuth',
   async () => {
     try {
-      await api.get(APIRoute.Login);
+      const {data: {avatarUrl}} = await api.get(APIRoute.Login);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(loadUserAvatarUrl(avatarUrl));
     } catch(error) {
       handleError(error);
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const checkLoginOrLogoutAction = createAsyncThunk(
+  'checkLoginOrLogout',
+  async () => {
+    try {
+      const {data: {avatarUrl}} = await api.get(APIRoute.Login);
+      store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(loadUserAvatarUrl(avatarUrl));
+    } catch(error) {
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
@@ -55,9 +71,10 @@ export const loginAction = createAsyncThunk(
   'login',
   async ({email, password}: AuthData) => {
     try {
-      const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+      const {data: {token, avatarUrl}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(loadUserAvatarUrl(avatarUrl));
       store.dispatch(redirectToRoute(AppRoute.Main));
     } catch(error) {
       handleError(error);
@@ -86,6 +103,7 @@ export const fetchSimilarFilmsAction = createAsyncThunk(
       const {data} = await api.get<FilmsData>(`/films/${filmId}/similar`);
       store.dispatch(loadSimilarFilms(data));
     } catch (error) {
+      store.dispatch(loadSimilarFilms([]));
       handleError(error);
     }
   },
@@ -99,6 +117,7 @@ export const fetchOpenedFilmAction = createAsyncThunk(
       store.dispatch(loadOpenedFilm(data));
     } catch (error) {
       handleError(error);
+      store.dispatch(loadOpenedFilm(null));
       store.dispatch(redirectToRoute(AppRoute.NotFound));
     }
   },
@@ -158,6 +177,7 @@ export const fetchMyListFilmsAction = createAsyncThunk(
       store.dispatch(loadMyListFilms(data));
     } catch(error) {
       handleError(error);
+      store.dispatch(loadMyListFilms([]));
     }
   },
 );

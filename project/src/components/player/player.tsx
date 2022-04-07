@@ -2,6 +2,8 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import {useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/index';
 import browserHistory from '../../browser-history';
+import { VideoLoadingSpinner } from '../video-loading-spinner/video-loading-spinner';
+import { getAllFilms } from '../../store/films-data-loading-process/selectors';
 
 function Player (): JSX.Element {
 
@@ -13,7 +15,9 @@ function Player (): JSX.Element {
 
   const [videoProgress, setVideoProgress] = useState(0);
 
-  const {allFilms} = useAppSelector(({DATA}) => DATA);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
+
+  const allFilms = useAppSelector(getAllFilms);
 
   const params = useParams();
   const film = allFilms.find((element) => element.id === Number(params.id));
@@ -40,6 +44,20 @@ function Player (): JSX.Element {
       setVideoProgress(((videoPlayerRef.current?.currentTime) / videoFullTime) * 100);
     };
   }
+
+
+  if(videoPlayerRef.current) {
+    const video = videoPlayerRef.current;
+
+    video.onloadstart = (evt) => {
+      setIsVideoLoading(true);
+    };
+
+    video.onloadeddata = (evt) => {
+      setIsVideoLoading(false);
+    };
+  }
+
 
   useEffect(() => {
 
@@ -81,6 +99,8 @@ function Player (): JSX.Element {
     <div className="player">
       <video ref={videoPlayerRef} src={film?.videoLink} id="video" className="player__video" poster={film?.posterImage}></video>
 
+      {isVideoLoading ? <VideoLoadingSpinner /> : ''}
+
       <button type="button" className="player__exit" onClick={exitPlayer}>Exit</button>
 
       <div className="player__controls">
@@ -109,7 +129,7 @@ function Player (): JSX.Element {
             </button>
           )}
 
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film?.name}</div>
 
           <button type="button" className="player__full-screen" onClick={toggleFullScreen}>
             <svg viewBox="0 0 27 27" width="27" height="27">
