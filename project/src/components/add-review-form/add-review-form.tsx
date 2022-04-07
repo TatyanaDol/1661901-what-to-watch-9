@@ -21,14 +21,14 @@ function AddReviewForm ({filmId}: AddReviewFormProps): JSX.Element | null {
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleFormDataChange = (evt: React.FormEvent<HTMLDivElement>) => {
-    const {name, value} = evt.target as HTMLInputElement;
+  const handleFormDataChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = evt.target;
     setReviewFormData({...reviewFormData, [name]: value});
   };
 
-  const handleFormDataTextInput = (evt: React.FormEvent<HTMLTextAreaElement>) => {
+  const handleFormDataTextInput = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     evt.preventDefault();
-    const {name, value} = evt.target as HTMLTextAreaElement;
+    const {name, value} = evt.target;
     setReviewFormData({...reviewFormData, [name]: value});
   };
 
@@ -72,7 +72,7 @@ function AddReviewForm ({filmId}: AddReviewFormProps): JSX.Element | null {
       </div>
 
       <div className="add-review__text">
-        <textarea ref={textareaRef} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" minLength={MINIMUM_REVIEW_LENGTH} maxLength={MAXIMUM_REVIEW_LENGTH} onInput={handleFormDataTextInput}></textarea>
+        <textarea ref={textareaRef} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" minLength={MINIMUM_REVIEW_LENGTH} maxLength={MAXIMUM_REVIEW_LENGTH} onInput={handleFormDataTextInput} />
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit" disabled={reviewFormData.rating === 0 || (textareaRef.current?.textLength < 50) || isSaving}>Post</button>
         </div>

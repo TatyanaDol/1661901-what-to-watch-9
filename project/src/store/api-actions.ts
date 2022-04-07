@@ -21,6 +21,7 @@ export const fetchFilmsAction = createAsyncThunk(
       store.dispatch(loadFilms(data));
       store.dispatch(filterFilmsByGenre(data));
     } catch (error) {
+      store.dispatch(loadFilms([]));
       handleError(error);
     }
   },
@@ -33,6 +34,7 @@ export const fetchPromoFilmAction = createAsyncThunk(
       const {data} = await api.get<FilmData>(APIRoute.Promo);
       store.dispatch(loadPromoFilm(data));
     } catch (error) {
+      store.dispatch(loadPromoFilm([]));
       handleError(error);
     }
   },
@@ -101,6 +103,7 @@ export const fetchSimilarFilmsAction = createAsyncThunk(
       const {data} = await api.get<FilmsData>(`/films/${filmId}/similar`);
       store.dispatch(loadSimilarFilms(data));
     } catch (error) {
+      store.dispatch(loadSimilarFilms([]));
       handleError(error);
     }
   },
@@ -114,6 +117,7 @@ export const fetchOpenedFilmAction = createAsyncThunk(
       store.dispatch(loadOpenedFilm(data));
     } catch (error) {
       handleError(error);
+      store.dispatch(loadOpenedFilm([]));
       store.dispatch(redirectToRoute(AppRoute.NotFound));
     }
   },
@@ -173,6 +177,7 @@ export const fetchMyListFilmsAction = createAsyncThunk(
       store.dispatch(loadMyListFilms(data));
     } catch(error) {
       handleError(error);
+      store.dispatch(loadMyListFilms([]));
     }
   },
 );
